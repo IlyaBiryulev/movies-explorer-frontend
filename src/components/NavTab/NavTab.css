@@ -1,0 +1,32 @@
+.navtab {
+  background-color: #272727;
+}
+
+.navtab__wrapper {
+  display: flex;
+  list-style: none;
+  margin: 25px 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.navtap__link {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  margin-right: 40px;
+}
+
+.navtap__link:last-child {
+  margin-right: 0;
+}
+
+.navtap__btn {
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  padding: 0;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

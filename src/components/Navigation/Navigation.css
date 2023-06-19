@@ -1,0 +1,30 @@
+.header_nav {
+  display: flex;
+}
+
+.header__link {
+  color: #fff;
+  width: 100%;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  margin-right: 50px;
+}
+
+.header__link:first-child {
+  margin-right: 20px;
+}
+
+.header__link:last-child {
+  margin-right: 0;
+}
+
+.header__link_signin {
+  background-color: #3DDC84;
+  color: black;
+  border-radius: 3px;
+  padding: 8px 20px;
+  margin-left: 10px;
+}
+

@@ -1,10 +1,12 @@
 import './Header.css';
+import Navigation from '../Navigation/Navigation.js';
 
 function Header() {
     return (
         <div>
           <header className="header">
-            <div className="logo"></div>
+            <div className="header__logo"></div>
+            <Navigation />
           </header>
         </div>
     );
