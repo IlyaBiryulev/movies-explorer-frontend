@@ -49,4 +49,10 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
+  transition: opacity 0.3s;
+}
+
+.footer__link:hover {
+  cursor: pointer;
+  opacity: .6;
 }

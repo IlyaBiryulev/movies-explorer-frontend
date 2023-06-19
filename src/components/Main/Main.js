@@ -1,4 +1,5 @@
 import './Main.css';
+import { React, useRef } from 'react';
 import Promo from '../Promo/Promo.js';
 import NavTab from '../NavTab/NavTab.js';
 import AboutProject from '../AboutProject/AboutProject.js';
@@ -6,13 +7,40 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 
 function Main() {
+  const AboutPr = useRef(null);
+  const Tech = useRef(null);
+  const About = useRef(null);
+
+  const handleClickProject = () => {
+    AboutPr.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
+
+  const handleClickTechs = () => {
+    Tech.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
+
+  const handleClickAboutMe = () => {
+    About.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
     return (
         <main className='main'>
           <Promo />
-          <NavTab />
-          <AboutProject />
-          <Techs />
-          <AboutMe />
+          <NavTab
+            onProjectClick={handleClickProject}
+            onTechsClick={handleClickTechs}
+            onAboutClick={handleClickAboutMe}/>
+          <AboutProject onRef={AboutPr}/>
+          <Techs onRef={Tech}/>
+          <AboutMe onRef={About}/>
         </main>
     );
 }

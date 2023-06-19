@@ -1,9 +1,9 @@
 import './Techs.css';
 import SectionMainTitle from '../SectionMainTitle/SectionMainTitle.js';
 
-function Techs() {
+function Techs({ onRef }) {
     return (
-        <section className='techs'>
+        <section className='techs' ref={ onRef }>
           <SectionMainTitle title='Технологии'/>
           <h2 className='techs__title'>7 технологий</h2>
           <p className='techs__subtitle'>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>

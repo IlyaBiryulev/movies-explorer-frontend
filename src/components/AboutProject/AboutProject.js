@@ -1,9 +1,9 @@
 import './AboutProject.css';
 import SectionMainTitle from '../SectionMainTitle/SectionMainTitle.js';
 
-function AboutProject() {
+function AboutProject({ onRef }) {
     return (
-        <section className='about'>
+        <section className='about' ref={ onRef }>
           <SectionMainTitle title='О проекте'/>
           <div className='about__information'>
             <p className='about__text'>Дипломный проект включал 5 этапов</p>

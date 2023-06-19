@@ -29,4 +29,10 @@
   color: #fff;
   text-decoration: underline;
   text-underline-offset: 3px;
+  transition: opacity 0.3s;
+}
+
+.navtap__btn:hover {
+  cursor: pointer;
+  opacity: .6;
 }

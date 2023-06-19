@@ -4,9 +4,9 @@ import Portfolio from '../Portfolio/Portfolio.js';
 
 import photo from '../../images/S3BaIqb3JgU.jpg';
 
-function AboutMe() {
+function AboutMe({ onRef }) {
     return (
-        <section className='about-me'>
+        <section className='about-me' ref={ onRef }>
           <SectionMainTitle title='Стдуент'/>
           <article className='about-me__wrapper'>
             <h2 className='about-me__name'>Илья</h2>
