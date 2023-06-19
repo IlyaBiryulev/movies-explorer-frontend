@@ -9,6 +9,7 @@ import SavedMovies from '../SavedMovies/SavedMovies.js';
 import Profile from '../Profile/Profile.js';
 import Login from '../Login/Login.js';
 import Register from '../Register/Register.js';
+import Footer from '../Footer/Footer.js';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path='/signin' element={<Login />} />
         <Route path='/signup' element={<Register />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
