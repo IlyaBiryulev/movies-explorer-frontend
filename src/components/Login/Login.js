@@ -6,7 +6,7 @@ function Login() {
     return (
       <section>
           <Authentication
-            name={'register'}
+            name={'login'}
             title={'Рады видеть!'}
             btnSubmit={'Войти'}
             isLogin={'Ещё не зарегистророваны?'}
@@ -16,7 +16,7 @@ function Login() {
             <input
               type="email"
               name="email"
-              form="register"
+              form="login"
               id="email-input"
               className="auth__form-input"
               required
@@ -26,7 +26,7 @@ function Login() {
             <input
               type="password"
               name="password"
-              form="register"
+              form="login"
               id="password-input"
               className="auth__form-input"
               required
