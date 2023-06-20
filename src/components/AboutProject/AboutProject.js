@@ -13,7 +13,7 @@ function AboutProject({ onRef }) {
           </div>
           <div className='about__due-date'>
             <p className='about__due-date-text about__due-date-text_week'>1 неделя</p>
-            <p className='about__due-date-text about__due-date-text_week'>4 неделя</p>
+            <p className='about__due-date-text about__due-date-text_week'>4 недели</p>
             <p className='about__due-date-text about__due-date-text_part'>Back-end</p>
             <p className='about__due-date-text about__due-date-text_part'>Front-end</p>
           </div>

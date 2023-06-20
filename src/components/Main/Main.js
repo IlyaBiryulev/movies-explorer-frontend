@@ -1,10 +1,13 @@
 import './Main.css';
 import { React, useRef } from 'react';
+import Header from '../Header/Header.js'
 import Promo from '../Promo/Promo.js';
 import NavTab from '../NavTab/NavTab.js';
 import AboutProject from '../AboutProject/AboutProject.js';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
+import Footer from '../Footer/Footer.js'
+
 
 function Main() {
   const AboutPr = useRef(null);
@@ -33,6 +36,7 @@ function Main() {
   };
     return (
         <main className='main'>
+          <Header />
           <Promo />
           <NavTab
             onProjectClick={handleClickProject}
@@ -41,6 +45,7 @@ function Main() {
           <AboutProject onRef={AboutPr}/>
           <Techs onRef={Tech}/>
           <AboutMe onRef={About}/>
+          <Footer />
         </main>
     );
 }

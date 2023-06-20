@@ -20,8 +20,6 @@ function Navigation() {
           <Link className='header__link' to='/'>Аккаунт</Link>
         </>
       );
-    } else if (location.pathname === '/signin' || '/signup') {
-      return(<></>)
     }
   }
 

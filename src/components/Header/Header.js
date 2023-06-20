@@ -1,11 +1,12 @@
 import './Header.css';
 import Navigation from '../Navigation/Navigation.js';
+import Logo from '../Logo/Logo.js';
 
 function Header() {
     return (
         <div>
           <header className="header">
-            <div className="header__logo"></div>
+            <Logo />
             <Navigation />
           </header>
         </div>
