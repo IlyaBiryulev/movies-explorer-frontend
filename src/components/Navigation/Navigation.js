@@ -17,7 +17,7 @@ function Navigation() {
         <>
           <Link className='header__link' to='/movies'>Фильмы</Link>
           <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
-          <Link className='header__link' to='/'>Аккаунт</Link>
+          <Link className='header__link' to='/profile'>Аккаунт</Link>
         </>
       );
     }
