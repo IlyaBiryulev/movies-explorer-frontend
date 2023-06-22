@@ -18,3 +18,9 @@
   line-height: 15px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 500px) {
+  .showmore__btn {
+    width: 240px;
+  }
+}

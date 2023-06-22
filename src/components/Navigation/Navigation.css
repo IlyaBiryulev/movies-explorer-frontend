@@ -9,11 +9,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
-  margin-right: 50px;
-}
-
-.header__link:first-child {
-  margin-right: 20px;
+  margin-right: 30px;
 }
 
 .header__link:last-child {
@@ -25,6 +21,11 @@
   color: black;
   border-radius: 3px;
   padding: 8px 20px;
-  margin-left: 10px;
+}
+
+@media screen and (max-width: 626px) {
+  .header__link {
+    margin-right: 14px;
+  }
 }
 

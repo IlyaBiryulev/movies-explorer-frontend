@@ -8,3 +8,26 @@
   column-gap: 20px;
   row-gap: 32px;
 }
+
+@media screen and (max-width: 1000px) {
+  .movies-card-list {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .movies-card-list {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    padding: 70px 30px 30px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .movies-card-list {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    padding: 40px 10px 30px;
+  }
+}

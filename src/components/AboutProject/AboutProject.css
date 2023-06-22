@@ -1,7 +1,6 @@
 .about {
   background-color: #202020;
   padding: 0 70px;
-  min-height: 608px;
 }
 
 .about__information {
@@ -9,7 +8,7 @@
   grid-template-columns: repeat(2, 1fr);
   row-gap: 26px;
   column-gap: 40px;
-  margin-bottom: 100px;
+  margin: 70px 0 100px;
 }
 
 .about__text {
@@ -17,6 +16,7 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
+  letter-spacing: -0.04em;
 }
 
 .about__caption {
@@ -29,6 +29,7 @@
 .about__due-date {
   display: grid;
   grid-template-columns: 228px 1fr;
+  margin-bottom: 70px;
 }
 
 .about__due-date-text {
@@ -42,6 +43,7 @@
   font-weight: 400;
   background-color: #303030;
   padding: 9px 0;
+
 }
 
 .about__due-date-text_week:first-child {
@@ -52,4 +54,42 @@
   font-weight: 500;
   color: #8B8B8B;
   padding-top: 14px;
+}
+
+@media screen and (max-width: 896px) {
+  .about{
+    padding: 0 50px;
+  }
+  .about__caption {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about__due-date{
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+@media screen and (max-width: 626px) {
+  .about{
+    padding: 0 18px;
+  }
+  .about__caption {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about__information {
+    grid-template-columns: 1fr;
+    margin: 60px 0;
+  }
+
+  .about__due-date-text_week:last-child {
+    grid-row-start: 4;
+    grid-row-end: 5;
+  }
+
+  .about__due-date {
+    grid-template-columns: 100px 1fr;
+  }
 }

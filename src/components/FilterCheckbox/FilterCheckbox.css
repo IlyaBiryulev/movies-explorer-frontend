@@ -1,6 +1,7 @@
 .checkbox {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .checkbox__text {
@@ -67,4 +68,10 @@
 
 .round:before {
   border-radius: 50%;
+}
+
+@media screen and (max-width: 626px) {
+  .checkbox__text {
+    font-size: 11px;
+  }
 }

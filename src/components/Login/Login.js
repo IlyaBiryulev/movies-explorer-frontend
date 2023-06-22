@@ -11,6 +11,7 @@ function Login() {
             btnSubmit={'Войти'}
             isLogin={'Ещё не зарегистророваны?'}
             Auth={'Регистрация'}
+            Route={'/signup'}
           >
             <p className='auth__placeholder'>E-mail</p>
             <input

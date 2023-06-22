@@ -75,3 +75,22 @@
   font-weight: 500;
 }
 
+@media screen and (max-width: 500px) {
+  .profile__form-wrapper {
+    width: 260px;
+  }
+
+  .profile__form-edit {
+    margin: 80px 0 379px;
+  }
+
+  .profile__form-input {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .profile__btn {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

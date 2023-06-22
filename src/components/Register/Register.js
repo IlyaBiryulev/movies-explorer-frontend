@@ -11,6 +11,7 @@ function Register() {
             btnSubmit={'Зарегистрироваться'}
             isLogin={'Уже зарегистророваны?'}
             Auth={'Войти'}
+            Route={'/signin'}
           >
             <p className='auth__placeholder'>Имя</p>
             <input

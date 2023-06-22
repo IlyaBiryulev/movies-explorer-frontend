@@ -12,3 +12,15 @@
 .header_black {
   background-color: #202020;
 }
+
+@media screen and (max-width: 896px) {
+  .header {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 626px) {
+  .header {
+    padding: 0 14px;
+  }
+}

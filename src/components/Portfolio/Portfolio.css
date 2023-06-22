@@ -50,3 +50,27 @@
   line-height: 60px;
   font-weight: 400;
 }
+
+@media screen and (max-width: 896px) {
+  .portfolio__link-text {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 626px) {
+  .portfolio__link-text {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__title {
+    font-size: 14px;
+    line-height: 20px;
+    padding-bottom: 40px;
+  }
+
+  .portfolio__link-btn {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
