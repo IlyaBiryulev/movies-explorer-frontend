@@ -34,20 +34,21 @@ function Main() {
       block: 'start',
     });
   };
-    return (
-        <main className='main'>
-          <Header />
-          <Promo />
-          <NavTab
-            onProjectClick={handleClickProject}
-            onTechsClick={handleClickTechs}
-            onAboutClick={handleClickAboutMe}/>
-          <AboutProject onRef={AboutPr}/>
-          <Techs onRef={Tech}/>
-          <AboutMe onRef={About}/>
-          <Footer />
-        </main>
-    );
+
+  return (
+    <main className='main'>
+      <Header />
+      <Promo />
+      <NavTab
+        onProjectClick={handleClickProject}
+        onTechsClick={handleClickTechs}
+        onAboutClick={handleClickAboutMe}/>
+      <AboutProject onRef={AboutPr}/>
+      <Techs onRef={Tech}/>
+      <AboutMe onRef={About}/>
+      <Footer />
+    </main>
+  );
 }
 
 export default Main;

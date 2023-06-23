@@ -21,9 +21,9 @@ function Navigation() {
     }
   }
 
-    return (
-      <div className='header__nav'>{navLinkToggle()}</div>
-    );
+  return (
+    <div className='header__nav'>{navLinkToggle()}</div>
+  );
 }
 
 export default Navigation;

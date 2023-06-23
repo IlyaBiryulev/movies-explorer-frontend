@@ -6,14 +6,14 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Footer from '../Footer/Footer.js'
 
 function SavedMovies({ onBurgerClick }) {
-    return (
-        <section className='movies'>
-          <Header onBurgerClick={onBurgerClick}/>
-          <SearchForm />
-          <MoviesCardList />
-          <Footer />
-        </section>
-    );
+  return (
+    <section className='movies'>
+      <Header onBurgerClick={onBurgerClick}/>
+      <SearchForm />
+      <MoviesCardList />
+      <Footer />
+    </section>
+  );
 }
 
 export default SavedMovies;
