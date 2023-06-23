@@ -5,26 +5,24 @@ function Navigation() {
   const location = useLocation();
 
   function navLinkToggle() {
-    if (location.pathname === '/') {
+    if (location.pathname === '/movies' || '/saved-movies' || '/profile') {
       return (
-        <>
-          <Link className='header__link' to='/signup'>Регистрация</Link>
-          <Link className='header__link header__link_signin' to='/signin'>Войти</Link>
-        </>
-      );
-    } else if (location.pathname === '/movies' || '/saved-movies') {
-      return (
-        <>
-          <Link className='header__link' to='/movies'>Фильмы</Link>
-          <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
-          <Link className='header__link' to='/profile'>Аккаунт</Link>
-        </>
+        <div className='header__nav-wrapper'>
+          <div className='header__links-movie'>
+            <Link className='header__link-nav' to='/movies'>Фильмы</Link>
+            <Link className='header__link-nav' to='/saved-movies'>Сохранённые фильмы</Link>
+          </div>
+          <Link className='header__link-profile' to='/profile'>
+            Аккаунт
+            <span className='header__link-avatar'></span>
+          </Link>
+        </div>
       );
     }
   }
 
     return (
-      <div className="header__nav">{navLinkToggle()}</div>
+      <div className='header__nav'>{navLinkToggle()}</div>
     );
 }
 

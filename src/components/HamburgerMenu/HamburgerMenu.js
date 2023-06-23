@@ -1,31 +1,19 @@
-import './Navigation.css';
-import {Link, useLocation} from 'react-router-dom';
+import './HamburgerMenu.css';
+import { Link } from 'react-router-dom';
 
-function Navigation() {
-  const location = useLocation();
+import Navigation from '../Navigation/Navigation.js';
+import Overlay from '../Overlay/Overlay.js';
 
-  function navLinkToggle() {
-    if (location.pathname === '/') {
-      return (
-        <>
-          <Link className='header__link' to='/signup'>Регистрация</Link>
-          <Link className='header__link header__link_signin' to='/signin'>Войти</Link>
-        </>
-      );
-    } else if (location.pathname === '/movies' || '/saved-movies') {
-      return (
-        <>
-          <Link className='header__link' to='/movies'>Фильмы</Link>
-          <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
-          <Link className='header__link' to='/profile'>Аккаунт</Link>
-        </>
-      );
-    }
-  }
-
-    return (
-      <div className="header__nav">{navLinkToggle()}</div>
-    );
+function HamburgerMenu({ isOpen, onBurgerClick }) {
+  return (
+    <Overlay isOpen={isOpen} onClose={onBurgerClick}>
+      <div className={`humburger-menu ${isOpen ? 'humburger-menu_active' : ''}`}>
+      <button className='humburger-menu__btn-close' onClick={onBurgerClick}></button>
+      <Link className='header__link-nav' to='/' onClick={onBurgerClick}>Главная</Link>
+      <Navigation />
+    </div>
+    </Overlay>
+  );
 }
 
-export default Navigation;
+export default HamburgerMenu;

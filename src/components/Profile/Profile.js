@@ -2,10 +2,10 @@ import './Profile.css';
 
 import Header from '../Header/Header.js';
 
-function Profile() {
+function Profile({ onBurgerClick }) {
   return (
     <body className='profile'>
-      <Header />
+      <Header onBurgerClick={ onBurgerClick }/>
       <section className='profile__wrapper'>
         <h1 className='profile__title'>Привет, Илья!</h1>
         <form className='profile__form-edit' name='profile'>

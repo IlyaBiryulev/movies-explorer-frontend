@@ -5,10 +5,10 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Footer from '../Footer/Footer.js'
 
-function SavedMovies() {
+function SavedMovies({ onBurgerClick }) {
     return (
         <section className='movies'>
-          <Header />
+          <Header onBurgerClick={onBurgerClick}/>
           <SearchForm />
           <MoviesCardList />
           <Footer />
