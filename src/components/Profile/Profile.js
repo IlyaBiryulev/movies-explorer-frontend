@@ -1,14 +1,29 @@
 import './Profile.css';
-
+import { useState } from "react";
 import Header from '../Header/Header.js';
 
 function Profile({ onBurgerClick }) {
+  //Временное решение
+  const [name, setName] = useState('Илья');
+  const [email, setEmail] = useState('birulevila@yandex.ru');
+
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+ }
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+ }
+
+ const handleSubmit = (e) => {
+  e.preventDefault();
+}
   return (
     <body className='profile'>
       <Header onBurgerClick={ onBurgerClick }/>
       <section className='profile__wrapper'>
         <h1 className='profile__title'>Привет, Илья!</h1>
-        <form className='profile__form-edit' name='profile'>
+        <form className='profile__form-edit' name='profile' onSubmit={handleSubmit}>
           <label className='profile__form-wrapper'>
             Имя
             <input
@@ -17,7 +32,8 @@ function Profile({ onBurgerClick }) {
               form="profile"
               id="name-input"
               className="profile__form-input"
-              value={'Илья'}
+              value={name}
+              onChange={handleChangeName}
               required
             />
           </label>
@@ -30,7 +46,8 @@ function Profile({ onBurgerClick }) {
               id="email-input"
               className="profile__form-input"
               required
-              value={'birulevila@yandex.ru'}
+              value={email}
+              onChange={handleChangeEmail}
             />
           </label>
         </form>

@@ -9,17 +9,17 @@ function Validation() {
   function onChange(e) {
     const { name, value } = e.target;
     const error = e.target.validationMessage;
-    const formValid = e.target.closest("form").checkValidity();
+    const formValidation = e.target.closest('form').checkValidity();
     setValues((values) => ({ ...values, [name]: value }));
     setErrors((errors) => ({ ...errors, [name]: error }));
-    setValid(formValid);
+    setValid(formValidation);
   }
 
   const resetValidation = useCallback(
-    (isValid = false, values = {}, errors = {}) => {
-      setValid(isValid);
-      setValues(values);
-      setErrors(errors);
+    () => {
+      setValid(false);
+      setValues({});
+      setErrors({});
     },
     [setValid, setValues, setErrors]
   );
