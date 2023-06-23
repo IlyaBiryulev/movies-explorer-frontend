@@ -9,16 +9,17 @@ function Navigation() {
       return (
         <div className='header__nav-wrapper'>
           <div className='header__links-movie'>
-            <Link className='header__link-nav' to='/movies'>Фильмы</Link>
-            <Link className='header__link-nav' to='/saved-movies'>Сохранённые фильмы</Link>
+            <Link className={`header__link-nav ${location.pathname === '/movies' ?  'header__link_select' : ''}`} to='/movies'>Фильмы</Link>
+            <Link className={`header__link-nav ${location.pathname === '/saved-movies' ?  'header__link_select' : ''}`} to='/saved-movies'>Сохранённые фильмы</Link>
           </div>
-          <Link className='header__link-profile' to='/profile'>
+          <Link className={`header__link-profile ${location.pathname === '/profile' ?  'header__link_select' : ''}`} to='/profile'>
             Аккаунт
-            <span className='header__link-avatar'></span>
+            <span className='header__link-avatar header__link_select'></span>
           </Link>
         </div>
       );
     }
+
   }
 
   return (

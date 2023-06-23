@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import './Movies.css';
 
 import Header from '../Header/Header.js';
@@ -6,7 +6,7 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import ShowMore from '../ShowMore/ShowMore.js';
 import Footer from '../Footer/Footer.js'
-import Preloader from '../Preloader/Preloader.js'
+/* import Preloader from '../Preloader/Preloader.js' */
 
 function Movies({ onBurgerClick }) {
   const initialMoviesToShow = 16;
@@ -17,14 +17,14 @@ function Movies({ onBurgerClick }) {
   };
 
   return (
-    <body className='movies'>
+    <section className='movies'>
       <Header onBurgerClick={onBurgerClick}/>
       <SearchForm />
       {/* <Preloader /> */}
       <MoviesCardList showMore={moviesToShow}/>
       <ShowMore onClick={handleShowMore}/>
       <Footer />
-    </body>
+    </section>
   );
 }
 

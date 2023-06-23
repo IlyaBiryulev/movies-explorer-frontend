@@ -7,10 +7,10 @@ function Authentication({ title, name, btnSubmit, isLogin, Auth, children, onSub
   return (
     <section className="auth">
       <div className="auth__container">
-        <div className='logo'>
+        <div className='auth__header'>
           <Logo />
+          <h2 className="auth__title">{title}</h2>
         </div>
-        <h2 className="auth__title">{title}</h2>
         <form
         action="#"
         className="auth__form"

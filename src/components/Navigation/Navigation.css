@@ -17,6 +17,11 @@
   margin-right: 30px;
 }
 
+.header__link-nav:hover {
+  opacity: .6;
+}
+
+
 .header__link-profile {
   color: #fff;
   display: flex;
@@ -37,6 +42,14 @@
   border: 1px solid rgba(49, 49, 49, 1);
   border-radius: 4px;
   margin-left: 17px;
+}
+
+.header__link-profile:hover {
+  opacity: .6;
+}
+
+.header__link_select {
+  text-decoration: underline;
 }
 
 .header__link:last-child {
