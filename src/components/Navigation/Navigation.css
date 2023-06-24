@@ -75,10 +75,12 @@
   }
 
   .header__link-profile {
+    font-size: 14px;
     margin-left: 0;
   }
 
   .header__link-nav {
+    font-size: 18px;
     margin-right: 0;
     margin-bottom: 28px;
   }

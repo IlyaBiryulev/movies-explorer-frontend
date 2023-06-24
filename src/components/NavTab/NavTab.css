@@ -11,18 +11,18 @@
   justify-content: center;
 }
 
-.navtap__link {
+.navtab__link {
   font-size: 13px;
   font-weight: 500;
   line-height: 16px;
   margin-right: 40px;
 }
 
-.navtap__link:last-child {
+.navtab__link:last-child {
   margin-right: 0;
 }
 
-.navtap__btn {
+.navtab__btn {
   background-color: rgba(0, 0, 0, 0);
   border: 0;
   padding: 0;
@@ -32,7 +32,7 @@
   transition: opacity 0.3s;
 }
 
-.navtap__btn:hover {
+.navtab__btn:hover {
   cursor: pointer;
   opacity: .6;
 }

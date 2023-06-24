@@ -19,7 +19,7 @@ function Profile({ onBurgerClick }) {
   e.preventDefault();
 }
   return (
-    <body className='profile'>
+    <main className='profile'>
       <Header onBurgerClick={ onBurgerClick }/>
       <section className='profile__wrapper'>
         <h1 className='profile__title'>Привет, Илья!</h1>
@@ -56,7 +56,7 @@ function Profile({ onBurgerClick }) {
           <button className='profile__btn profile__btn_logout' type='button'>Выйти из акканута</button>
         </div>
       </section>
-    </body>
+    </main>
   );
 }
 

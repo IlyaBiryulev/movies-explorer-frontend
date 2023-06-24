@@ -48,6 +48,7 @@
 
 .about__due-date-text_week:first-child {
   background-color: #3DDC84;
+  color: #000;
 }
 
 .about__due-date-text_part {

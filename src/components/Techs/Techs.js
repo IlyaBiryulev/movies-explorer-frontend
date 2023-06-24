@@ -14,7 +14,7 @@ function Techs({ onRef }) {
           <li className='techs__list-text'>JS</li>
           <li className='techs__list-text'>React</li>
           <li className='techs__list-text'>Git</li>
-          <li className='techs__list-text'>Exress.js</li>
+          <li className='techs__list-text'>Exrpess.js</li>
           <li className='techs__list-text'>mongoDB</li>
         </ul>
       </div>

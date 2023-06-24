@@ -11,7 +11,7 @@ function Login() {
   }
 
   return (
-    <section>
+    <main>
       <Authentication
       name={'login'}
       title={'Рады видеть!'}
@@ -47,7 +47,7 @@ function Login() {
         />
         <span className={`auth__form-input-error ${errors.password ? 'auth__form-input-error_active' : ''}`}>{errors.password}</span>
       </Authentication>
-    </section>
+    </main>
   );
 }
 

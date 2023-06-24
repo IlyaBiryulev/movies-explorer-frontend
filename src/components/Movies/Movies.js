@@ -17,14 +17,14 @@ function Movies({ onBurgerClick }) {
   };
 
   return (
-    <section className='movies'>
+    <main className='movies'>
       <Header onBurgerClick={onBurgerClick}/>
       <SearchForm />
       {/* <Preloader /> */}
       <MoviesCardList showMore={moviesToShow}/>
       <ShowMore onClick={handleShowMore}/>
       <Footer />
-    </section>
+    </main>
   );
 }
 

@@ -11,7 +11,7 @@ function Register() {
   }
 
   return (
-    <section>
+    <main>
       <Authentication
         name={'register'}
         title={'Добро пожаловать!'}
@@ -59,7 +59,7 @@ function Register() {
         />
         <span className={`auth__form-input-error ${errors.email ? 'auth__form-input-error_active' : ''}`}>{errors.password || ''}</span>
       </Authentication>
-    </section>
+    </main>
   );
 }
 

@@ -7,12 +7,12 @@ import Footer from '../Footer/Footer.js'
 
 function SavedMovies({ onBurgerClick }) {
   return (
-    <section className='movies'>
+    <main className='movies'>
       <Header onBurgerClick={onBurgerClick}/>
       <SearchForm />
       <MoviesCardList />
       <Footer />
-    </section>
+    </main>
   );
 }
 
