@@ -1,0 +1,43 @@
+.humburger-menu {
+  visibility: hidden;
+  width: 520px;
+  min-height: 100%;
+  position: absolute;
+  top: 0;
+  right: -520px;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 23px 23px 92px;
+  box-sizing: border-box;
+  background-color: #202020;
+  transition: right 0.6s, visibility 0.6s;
+}
+
+.humburger-menu_active {
+  right: 0;
+  visibility: visible;
+}
+
+.humburger-menu__btn-close {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 105px;
+  padding: 0;
+  border: none;
+  align-self: flex-end;
+  background-image: url('../../images/btn-close.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 520px) {
+  .humburger-menu {
+    width: 320px;
+    padding: 13px 13px 48px;
+  }
+}

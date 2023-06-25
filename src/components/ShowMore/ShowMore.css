@@ -1,0 +1,26 @@
+.showmore {
+  background-color: #202020;
+  padding: 50px 0 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.showmore__btn {
+  width: 320px;
+  height: 36px;
+  border: 1px solid rgba(66, 66, 66, 1);
+  border-radius: 10px;
+  background-color: #202020;
+  color: #fff;
+  padding: 0;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+  .showmore__btn {
+    width: 240px;
+  }
+}
