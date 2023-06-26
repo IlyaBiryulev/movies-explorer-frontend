@@ -3,11 +3,12 @@ import './Register.css';
 import Authentication from '../Authentication/Authentication.js';
 import Validation from '../Validation/Validation.js';
 
-function Register() {
+function Register({ onRegister }) {
   const { values, errors, isValid, onChange } = Validation();
 
   function handleSubmit(e) {
     e.preventDefault();
+    onRegister(values)
   }
 
   return (
@@ -16,11 +17,11 @@ function Register() {
         name={'register'}
         title={'Добро пожаловать!'}
         btnSubmit={'Зарегистрироваться'}
-        onSubmit={handleSubmit}
         isValid={isValid}
         isLogin={'Уже зарегистророваны?'}
         Auth={'Войти'}
         Route={'/signin'}
+        onSubmit={handleSubmit}
       >
         <p className='auth__placeholder'>Имя</p>
         <input

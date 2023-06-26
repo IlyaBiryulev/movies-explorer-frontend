@@ -1,28 +1,24 @@
 import './Profile.css';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Header from '../Header/Header.js';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import Validation from '../Validation/Validation.js';
 
 function Profile({ onBurgerClick }) {
-  //Временное решение
-  const [name, setName] = useState('Илья');
-  const [email, setEmail] = useState('birulevila@yandex.ru');
+  const currentUser = useContext(CurrentUserContext);
 
-  const handleChangeName = (e) => {
-    setName(e.target.value);
- }
+  const { values, errors, isValid, onChange } = Validation();
 
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
- }
 
- const handleSubmit = (e) => {
-  e.preventDefault();
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
+
   return (
     <main className='profile'>
       <Header onBurgerClick={ onBurgerClick }/>
       <section className='profile__wrapper'>
-        <h1 className='profile__title'>Привет, Илья!</h1>
+        <h1 className='profile__title'>Привет, {currentUser.name}!</h1>
         <form className='profile__form-edit' name='profile' onSubmit={handleSubmit}>
           <label className='profile__form-wrapper'>
             Имя
@@ -32,8 +28,8 @@ function Profile({ onBurgerClick }) {
               form="profile"
               id="name-input"
               className="profile__form-input"
-              value={name}
-              onChange={handleChangeName}
+              value={currentUser.name}
+              onChange={onChange}
               required
             />
           </label>
@@ -46,8 +42,8 @@ function Profile({ onBurgerClick }) {
               id="email-input"
               className="profile__form-input"
               required
-              value={email}
-              onChange={handleChangeEmail}
+              value={currentUser.email}
+              onChange={onChange}
             />
           </label>
         </form>

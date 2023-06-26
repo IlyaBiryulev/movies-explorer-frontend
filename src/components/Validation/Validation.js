@@ -16,10 +16,10 @@ function Validation() {
   }
 
   const resetValidation = useCallback(
-    () => {
-      setValid(false);
-      setValues({});
-      setErrors({});
+    (newValues = {}, newErrors = {}, newIsValid = false) => {
+      setValid(newIsValid);
+      setValues(newValues);
+      setErrors(newErrors);
     },
     [setValid, setValues, setErrors]
   );

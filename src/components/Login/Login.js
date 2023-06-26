@@ -3,11 +3,12 @@ import './Login.css';
 import Authentication from '../Authentication/Authentication.js';
 import Validation from '../Validation/Validation.js';
 
-function Login() {
+function Login({ onLogin }) {
   const { values, errors, isValid, onChange } = Validation();
 
   function handleSubmit(e) {
     e.preventDefault();
+    onLogin(values);
   }
 
   return (
