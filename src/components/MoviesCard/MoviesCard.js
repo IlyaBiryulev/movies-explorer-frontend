@@ -4,27 +4,47 @@ import './MoviesCard.css';
 
 import { useLocation } from 'react-router-dom';
 
-function MoviesCard({ title, duration, link, linkAlt}) {
+const CountDuration = (minutes) => {
+  const hours = Math.floor(minutes / 60);
+  const min = minutes % 60;
+  return `${hours}ч ${min < 10 ? '0' : ''}${min}м`;
+}
+
+function MoviesCard({ movie, saveMovie, isSaveMovie }) {
   const location = useLocation();
 
-  const [ isSave, setIsSave] = useState(false);
-
   const handleSaveClick = () => {
-    setIsSave((state) => !state)
+    saveMovie(movie)
+  }
+
+  const handleSaveBtn = () => {
+    if (location.pathname === '/movies') {
+      return(
+      <button
+        className={`movies-card__save-btn ${isSaveMovie ? 'movies-card__save-btn_active' : ''}`}
+        type="button"
+        onClick={handleSaveClick}
+        >
+      </button>)
+    } else if (location.pathname === '/saved-movies') {
+      return(
+        <button
+          className='movies-card__delete-btn'
+          type="button"
+          onClick={handleSaveClick}>
+        </button>)
+    }
   }
 
   return (
     <div className='movies-card'>
-      <img src={link} alt={linkAlt} className='movies-card__img'></img>
+      <img src={`https://api.nomoreparties.co${movie.image.url}`} alt={movie.image.name} className='movies-card__img'></img>
       <div className='movies-card__caption'>
         <div className='movies-card__text'>
-          <h2 className='movies-card__title'>{title}</h2>
-          <p className='movies-card__duration'>{duration}</p>
+          <h2 className='movies-card__title'>{movie.title}</h2>
+          <p className='movies-card__duration'>{CountDuration(movie.duration)}</p>
         </div>
-        <button
-          className={location.pathname === '/movies' ? `movies-card__save-btn ${isSave ? 'movies-card__save-btn_active' : ''}` : 'movies-card__delete-btn'}
-          type="button"
-          onClick={handleSaveClick}></button>
+        {handleSaveBtn()}
       </div>
     </div>
   );

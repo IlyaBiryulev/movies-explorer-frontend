@@ -13,19 +13,101 @@ import HamburgerMenu from '../HamburgerMenu/HamburgerMenu.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute.js';
 
-import * as api from '../../utils/MainApi.js';
+import * as mainApi from '../../utils/MainApi.js';
+import * as movieApi from '../../utils/MoviesApi.js';
 
 function App() {
   const navigate = useNavigate();
 
-  const [ loggedIn,         setLoggedIn ] = useState(false);
-  const [ isRegisterSucces, setIsRegisterSucces] = useState(false);
-  const [ loading,          setLoading] = useState(true);
-  const [ currentUser,      setCurrentUser] = useState({});
-  const [ userData,        setUserData ] = React.useState("");
-
+  const [ loggedIn,         setLoggedIn         ] = useState(false);
+  const [ loading,          setLoading          ] = useState(true);
+  const [ currentUser,      setCurrentUser      ] = useState({
+    '_id':'',
+    'email':'',
+    'name': '',
+  });
 
   const [ isBurgerMenuOpen, setIsBurgerMenuOpen ] = useState(false);
+
+  const [ searchError,      setSearchError      ] = useState(false);
+  const [ saveCard,         setSaveCard         ] = useState([]);
+
+  const handleUserRegistration = useCallback(
+    async({ name, email, password }) => {
+      try {
+        const userData = await mainApi.register({ name, email, password })
+        if (userData) {
+          navigate('/signin', {replace: true})
+        }
+      } catch(err) {
+        console.error(err)
+      }
+    }, [navigate]
+  )
+
+  const handleUserAuthorization = useCallback(
+    async({ email, password }) => {
+      try {
+        const userData = await mainApi.authorize({ email, password })
+        if (userData) {
+          setLoggedIn(true);
+          navigate('/movies', {replace: true})
+        }
+      } catch(err) {
+        console.log(err)
+      }
+    }, [navigate]
+  )
+
+  const handleUserCheck = useCallback(
+    async() => {
+      try {
+        const userData = await mainApi.getUserInfo()
+        setLoggedIn(true);
+        setCurrentUser(userData);
+        navigate('/profile', {replace: true});
+      } catch(err) {
+        console.error(err);
+      }
+    }, [navigate]
+  )
+
+  async function getMoviesCards() {
+    setLoading(true);
+    try {
+      const data = await movieApi.getMovies();
+      if (data) {
+        return data;
+      }
+    } catch(err) {
+      console.error(err)
+    } finally {
+      setLoading(false);
+    }
+  }
+
+   async function saveMovieCard(item) {
+    try {
+      const movieData = await mainApi.createMovieCard({
+        /* country: item.country,
+        director: item.director,
+        duration: item.duration,
+        year: item.year,
+        description: item.description,
+        image: item.image,
+        trailerLink: item.trailerLink,
+        thumbnail: item.thumbnail,
+        movieId: item.movieId,
+        nameRU: item.nameRU,
+        nameEN: item.nameEN, */
+      });
+      if (movieData) {
+        setSaveCard([movieData, ...saveCard])
+      }
+    } catch(err) {
+      console.error(err)
+    }
+  }
 
   const handleBurgerMenuClick = () => {
     if(!isBurgerMenuOpen) {
@@ -35,84 +117,9 @@ function App() {
     }
   }
 
- /*  React.useEffect(() => {
-    if (loggedIn) {
-      Promise.all([api.getUserInfo()])
-    .then((values) => {
-      setCurrentUser(values[0])
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-    }
-  },[loggedIn]) */
-
-  const userCheck = useCallback(
-    async () => {
-      try {
-        const userData = await api.getUserInfo();
-        if (userData) {
-          setUserData(userData)
-          setLoggedIn(true);
-        }
-      } catch(err) {
-        console.error(err)
-      } finally {
-        setLoading(false);
-      }
-    },
-  );
-
-  const handleUserRegister  = useCallback(
-    async ({ name, email, password }) => {
-      try {
-        const data = await api.register({ name, email, password });
-        if(data) {
-          /* setIsRegisterSucces(true); */
-          navigate('/signin', {replace: true});
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [navigate]
-  );
-
-  const handleUserLogin  = useCallback(
-    async ({ email, password }) => {
-      setLoading(true);
-      try {
-        const data = await api.authorize({ email, password});
-        if(data) {
-          setLoggedIn(true);
-          navigate('/movies', {replace: true});
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [navigate]
-  );
-
-  const handleUserLogOut = React.useCallback(async () => {
-    try {
-      const data = await api.logout();
-      if (data) {
-        setLoggedIn(false);
-        navigate('/signin', { replace: true });
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, [navigate]);
-
   useEffect(() => {
-    userCheck();
-  }, [loggedIn, userCheck])
+    handleUserCheck();
+  }, [ loggedIn, handleUserCheck ])
 
   return (
     <div className="app__content">
@@ -122,22 +129,53 @@ function App() {
           onBurgerClick={handleBurgerMenuClick}
         />
         <Routes>
-          <Route path='/' element={<Main />} />
+          <Route path='/' element={<Main loggedIn = {loggedIn}/>} />
+          {/* <Route path='/movies'
+            element={
+              <Movies
+                onBurgerClick = {handleBurgerMenuClick}
+                onSearch={getMoviesCards}
+                isSearchError={searchError}
+                isLoading={loading}
+                saveMovie={saveMovieCard}
+                loggedIn ={loggedIn}
+              />
+            }
+          />
+          <Route path='/saved-movies'
+            element={
+              <SavedMovies
+                onBurgerClick = {handleBurgerMenuClick}
+                savedMovie={saveCard}
+              />
+            }
+          />
+          <Route path='/profile'
+            element={
+              <Profile
+                onBurgerClick = {handleBurgerMenuClick}
+              />
+            }
+          /> */}
           <Route path='/movies'
             element = {
               <ProtectedRouteElement
                 element={Movies}
                 onBurgerClick = {handleBurgerMenuClick}
-                loggedIn ={loggedIn}
+                onSearch = {getMoviesCards}
+                isSearchError = {searchError}
+                isLoading = {loading}
+                saveMovie = {saveMovieCard}
+                loggedIn = {loggedIn}
               />
             }
           />
           <Route path='/saved-movies'
             element = {
               <ProtectedRouteElement
-                element={SavedMovies}
+                element = {SavedMovies}
                 onBurgerClick = {handleBurgerMenuClick}
-                loggedIn ={loggedIn}
+                loggedIn = {loggedIn}
               />
             }
           />
@@ -146,13 +184,23 @@ function App() {
               <ProtectedRouteElement
                 element={Profile}
                 onBurgerClick = {handleBurgerMenuClick}
-                onLogOut = {handleUserLogOut}
+                /* onLogOut = {handleUserLogOut} */
                 loggedIn ={loggedIn}
               />
             }
           />
-          <Route path='/signin' element={<Login onLogin = {handleUserLogin}/>} />
-          <Route path='/signup' element={<Register onRegister = {handleUserRegister}/>} />
+          <Route path='/signin'
+            element={
+            <Login
+              onLogin = {handleUserAuthorization}
+            />
+          }/>
+          <Route path='/signup'
+            element={
+            <Register
+              onRegister = {handleUserRegistration}
+            />
+          }/>
           <Route path='*' element={<NotFound />} />
         </Routes>
       </CurrentUserContext.Provider>

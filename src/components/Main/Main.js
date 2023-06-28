@@ -9,7 +9,7 @@ import AboutMe from '../AboutMe/AboutMe';
 import Footer from '../Footer/Footer.js'
 
 
-function Main() {
+function Main({ loggedIn }) {
   const AboutPr = useRef(null);
   const Tech = useRef(null);
   const About = useRef(null);
@@ -37,7 +37,7 @@ function Main() {
 
   return (
     <main className='main'>
-      <Header />
+      <Header loggedIn = {loggedIn} />
       <Promo />
       <NavTab
         onProjectClick={handleClickProject}
