@@ -28,6 +28,7 @@ function Validation() {
     values,
     errors,
     isValid,
+    setValues,
     onChange,
     resetValidation,
   };

@@ -34,7 +34,7 @@ function MoviesCardList({ movies, cardParams, showMore, movieNotFound, isSearchE
 
   return (
     <section className='movies-card-list'>
-      {!localStorage.getItem('movieSearch') && movies.length === 0}
+      {!localStorage.getItem('movieSearch') && movies.length === 0 && null}
       {isLoading && movies.length === 0 && <Preloader />}
       {movieNotFound && (
         <p className='movies-card-list__status'>Ничего не найдено</p>

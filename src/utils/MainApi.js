@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api.moviedomen.nomoredomains.rocks';
+const BASE_URL = 'http://localhost:3000';
 
 const makeRequest = (url, method, body) => {
   const headers = { "Content-Type": "application/json" };
@@ -26,7 +26,7 @@ export function getUserInfo() {
 }
 
 export function logout() {
-  return makeRequest("/users/me", "DELETE");
+  return makeRequest("/signout", "POST");
 }
 
 export function setUserProfile({ name, email }) {

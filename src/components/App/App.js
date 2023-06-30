@@ -21,11 +21,7 @@ function App() {
 
   const [ loggedIn,         setLoggedIn         ] = useState(false);
   const [ loading,          setLoading          ] = useState(true);
-  const [ currentUser,      setCurrentUser      ] = useState({
-    '_id':'',
-    'email':'',
-    'name': '',
-  });
+  const [ currentUser,      setCurrentUser      ] = useState({});
 
   const [ isBurgerMenuOpen, setIsBurgerMenuOpen ] = useState(false);
 
@@ -65,12 +61,36 @@ function App() {
         const userData = await mainApi.getUserInfo()
         setLoggedIn(true);
         setCurrentUser(userData);
-        navigate('/profile', {replace: true});
       } catch(err) {
         console.error(err);
       }
-    }, [navigate]
+    }, []
   )
+
+  async function userProfileUpdate ({ name, email }) {
+    try {
+      const userData = await mainApi.setUserProfile({ name, email })
+      if (userData) {
+        setCurrentUser(userData);
+      }
+    } catch(err) {
+      console.error(err)
+    }
+  }
+
+  const handleUserLogOut = useCallback(
+    async () => {
+    try {
+      const data = await mainApi.logout();
+      if (data) {
+        setLoggedIn(false);
+        setCurrentUser({})
+        navigate('/signin', { replace: true });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, [navigate]);
 
   async function getMoviesCards() {
     setLoading(true);
@@ -184,7 +204,8 @@ function App() {
               <ProtectedRouteElement
                 element={Profile}
                 onBurgerClick = {handleBurgerMenuClick}
-                /* onLogOut = {handleUserLogOut} */
+                editProfile = {userProfileUpdate}
+                onLogOut = {handleUserLogOut}
                 loggedIn ={loggedIn}
               />
             }
