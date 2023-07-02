@@ -7,169 +7,137 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import ShowMore from '../ShowMore/ShowMore.js';
 import Footer from '../Footer/Footer.js'
-/* import Preloader from '../Preloader/Preloader.js' */
 
-import { CARDS_PARAMS_RENDER } from "../../utils/config.js";
+import {
+  desktopScreenWidth,
+  padScreenWidth,
+  mobileScreenWidth,
+  initialCard,
+} from '../../utils/constants.js'
 
-function Movies({ onBurgerClick, onSearch, isSearchError, isLoading, saveMovie }) {
-  const initialMoviesToShow = 16;
-  const [moviesToShow, setMoviesToShow] = useState(initialMoviesToShow)
+function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMovie, savedMovie }) {
 
-  const handleShowMore = () => {
-    setMoviesToShow(moviesToShow + initialMoviesToShow);
-  };
+  const Screen = useResizeScreen();
 
   const [ initialMovies,     setInitialMovies   ] = useState([]);
   const [ movieCard,         setMovieCard       ] = useState([]);
-  const [ movieCardSearch,   setMovieCardSearch ] = useState([]);
   const [ movieFound,        setMovieFound      ] = useState([]);
-  const [ movieNotFound,     setMovieNotFound   ] = useState([]);
+  const [ cardRender,        setCardRender      ] = useState([]);
+  const [ movieNotFound,     setMovieNotFound   ] = useState(false);
   const [ isSearch,          setIsSearch        ] = useState(false);
   const [ isFilterOn,        setFilterOn        ] = useState(false);
 
-  const screenWidth = useResizeScreen();
-  const [ cardParams,       serCardParams       ] = useState([])
-
-  function movieFilter(movies, isFilterOn, isMovies) {
-    if (isMovies) {
-      localStorage.setItem('filterMovies', isFilterOn)
-    } else {
-      localStorage.setItem('filterSaveMovies', isFilterOn)
+  useEffect(() => {
+    if (Screen === desktopScreenWidth) {
+      setCardRender(initialCard.desktop);
+    } else if (padScreenWidth <= Screen <= desktopScreenWidth) {
+      setCardRender(initialCard.desktop);
+    } else if (mobileScreenWidth <= Screen <= padScreenWidth) {
+      setCardRender(initialCard.pad);
+    } else if (Screen === mobileScreenWidth ) {
+      setCardRender(initialCard.mobile);
     }
-    if (isFilterOn) {
-      const result = movies.filter((movie) => movie.duration <= 40);
-      return result;
+  }, [Screen]);
+
+
+  function movieFilter(movies, onCheckbox) {
+    const shortMovie = movies.filter((movie) => {
+      return movie.duration <= 40;
+    });
+
+    localStorage.setItem("filterMovies", onCheckbox);
+
+    if (onCheckbox) {
+      return shortMovie
     } else {
       return movies;
     }
   }
 
-  function movieSearch(movies, movieSearch, isMovies) {
-    const formattingMovieSearch = movieSearch.toLowerCase().trim();
-    const result = movies.filter((movie) => {
-      const nameRu = movie.nameRU.toLowerCase().trim();
-      const nameEn = movie.nameEN.toLowerCase().trim();
-      return(nameRu.includes(formattingMovieSearch) || nameEn.includes(formattingMovieSearch))
+  function searchMovie(movies, query) {
+    const movieResult = movies.filter((item) => {
+      return(item.nameRU.toLowerCase().includes(query.toLowerCase()) || item.nameEN.toLowerCase().includes(query.toLowerCase()))
     })
-    if (isMovies) {
-      localStorage.setItem('found', JSON.stringify(result));
-      localStorage.setItem('movieSearch', formattingMovieSearch);
-    } else {
-      localStorage.setItem('savedMovieSearch', formattingMovieSearch);
-    }
-    return result;
+    localStorage.setItem('foundMoviesList', JSON.stringify(movieResult));
+    localStorage.setItem('moviesQuery', query.toLowerCase().trim());
+    return movieResult;
   }
 
-  const handleSearchMovie = useCallback(
-    (movie, movieQuery) => {
-      const found = movieSearch(movie, movieQuery, false);
-      setMovieFound(found);
-      if (!found.length) {
-        setMovieNotFound(true);
-        setIsSearch(false);
-        setMovieCard(found)
-      } else {
-        const filter = movieFilter(found, isFilterOn, false);
-        setIsSearch(false);
-        setMovieCard(filter);
-        if (!filter.length) {
-          setIsSearch(false);
-          setMovieCard(true);
-        }
-      }
-    },
-    [isFilterOn]
-  );
-
-  const handleSearchSubmit = useCallback(
-    async(movieQuery) => {
+  const handleSearchMovieSubmit = useCallback(
+    async (query) => {
       setMovieNotFound(false);
       setIsSearch(true);
-      if(!initialMovies.length) {
-        const data = await onSearch();
-        if (data) {
-          setMovieCardSearch(data);
-          handleSearchMovie(data, movieQuery);
+      if (initialMovies.length === 0) {
+        const moviesData = await SearchMovies();
+        if (moviesData) {
+          setInitialMovies(moviesData);
         }
-      } else {
-        handleSearchMovie(initialMovies, movieQuery);
       }
+      const foundMovies = searchMovie(initialMovies, query);
+      const filteredMovies = movieFilter(foundMovies, isFilterOn);
+      setMovieFound(foundMovies);
+      setMovieCard(filteredMovies);
+      setMovieNotFound(filteredMovies.length === 0);
     },
-    [onSearch, handleSearchMovie, initialMovies]
+    [initialMovies, isFilterOn, SearchMovies]
   );
 
-  const handleFilter = useCallback(
-    (isClick) => {
-      setFilterOn(isClick);
+  const handleOnFilterClick = useCallback(
+    (Clicked) => {
+      setFilterOn(Clicked);
       setMovieNotFound(false);
-      const filter = movieFilter(movieFound, isClick, false);
-      setMovieCard(filter);
-      if (!filter.length) {
-        setMovieNotFound(true);
-      }
+      const filtered = movieFilter(movieFound, Clicked);
+      setMovieCard(filtered);
+      filtered.length === 0 && setMovieNotFound(true);
     },
     [movieFound]
   );
 
-  useEffect(() => {
-    if (screenWidth >= CARDS_PARAMS_RENDER.base.width) {
-      serCardParams(CARDS_PARAMS_RENDER.base.cards);
-    } else if (
-      screenWidth < CARDS_PARAMS_RENDER.base.width &&
-      screenWidth >= CARDS_PARAMS_RENDER.desktop.width
-    ) {
-      serCardParams(CARDS_PARAMS_RENDER.desktop.cards);
-    } else if (
-      screenWidth < CARDS_PARAMS_RENDER.desktop.width &&
-      screenWidth >= CARDS_PARAMS_RENDER.tablet.width
-    ) {
-      serCardParams(CARDS_PARAMS_RENDER.tablet.cards);
-    } else {
-      serCardParams(CARDS_PARAMS_RENDER.mobile.cards);
+  const handleShowMore = () => {
+    const initialMoviesToShow = initialMovies.length;
+    const MoreMoviesToShow = cardRender.more;
+    const MoviesToShow = initialMoviesToShow + MoreMoviesToShow
+    if (movieCard.length > 0) {
+      const movieElement = movieCard.slice(initialMoviesToShow, MoviesToShow);
+      setMovieCard([...movieCard, ...movieElement]);
     }
-  }, [screenWidth]);
+  };
 
   useEffect(() => {
-    if (
-      localStorage.getItem('found') &&
-      localStorage.getItem('filterMovies')
-    ) {
-      const filter = JSON.parse(localStorage.getItem('filterMovies'));
+    if (localStorage.getItem('foundMoviesList') && localStorage.getItem('foundMoviesList')) {
+      const filter = JSON.parse(localStorage.getItem('foundMoviesList'));
       setFilterOn(filter);
-      const found = JSON.parse(localStorage.getItem('found'));
-      setMovieFound(found);
-      if (!found.length) {
-        setMovieNotFound(true);
-        setMovieCard(found);
+      const MovieList = JSON.parse(localStorage.getItem('foundMoviesList'));
+      setMovieFound(MovieList);
+      if (MovieList.length === 0) {
+        setMovieCard(MovieList);
       } else {
-        const movieFiltered = movieFilter(found, filter, false);
-        setMovieCard(movieFiltered);
-        if (!movieFiltered.length) {
+        const filtered = movieFilter(MovieList, filter);
+        setMovieCard(filtered);
+        if (filtered.length === 0) {
           setMovieNotFound(true);
         }
       }
     }
   }, []);
 
-
-
   return (
     <main className='movies'>
       <Header onBurgerClick={onBurgerClick}/>
       <SearchForm
-        onSearch={handleSearchSubmit}
-        onFilter={handleFilter}
+        onSearch={handleSearchMovieSubmit}
+        onFilter={handleOnFilterClick}
         isFilterOn={isFilterOn}
         isSearch={isSearch}
       />
       <MoviesCardList
         movies={movieCard}
-        cardParams={cardParams}
-        showMore={moviesToShow}
+        cardRender={cardRender}
         movieNotFound={movieNotFound}
         isSearchError={isSearchError}
         isLoading={isLoading}
         saveMovie={saveMovie}
+        savedMovie={savedMovie}
       />
       <ShowMore onClick={handleShowMore}/>
       <Footer />

@@ -16,11 +16,13 @@ import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute.js';
 import * as mainApi from '../../utils/MainApi.js';
 import * as movieApi from '../../utils/MoviesApi.js';
 
+import { MOVIE_API } from '../../utils/constants.js';
+
 function App() {
   const navigate = useNavigate();
 
   const [ loggedIn,         setLoggedIn         ] = useState(false);
-  const [ loading,          setLoading          ] = useState(true);
+  const [ loading,          setLoading          ] = useState(false);
   const [ currentUser,      setCurrentUser      ] = useState({});
 
   const [ isBurgerMenuOpen, setIsBurgerMenuOpen ] = useState(false);
@@ -30,6 +32,7 @@ function App() {
 
   const handleUserRegistration = useCallback(
     async({ name, email, password }) => {
+      setLoading(true);
       try {
         const userData = await mainApi.register({ name, email, password })
         if (userData) {
@@ -37,12 +40,15 @@ function App() {
         }
       } catch(err) {
         console.error(err)
+      } finally {
+        setLoading(false);
       }
     }, [navigate]
   )
 
   const handleUserAuthorization = useCallback(
     async({ email, password }) => {
+      setLoading(true);
       try {
         const userData = await mainApi.authorize({ email, password })
         if (userData) {
@@ -51,6 +57,8 @@ function App() {
         }
       } catch(err) {
         console.log(err)
+      } finally {
+        setLoading(false);
       }
     }, [navigate]
   )
@@ -68,6 +76,7 @@ function App() {
   )
 
   async function userProfileUpdate ({ name, email }) {
+    setLoading(true);
     try {
       const userData = await mainApi.setUserProfile({ name, email })
       if (userData) {
@@ -75,6 +84,8 @@ function App() {
       }
     } catch(err) {
       console.error(err)
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -84,7 +95,9 @@ function App() {
       const data = await mainApi.logout();
       if (data) {
         setLoggedIn(false);
-        setCurrentUser({})
+        setCurrentUser({});
+        setSaveCard([]);
+        localStorage.clear();
         navigate('/signin', { replace: true });
       }
     } catch (err) {
@@ -106,23 +119,49 @@ function App() {
     }
   }
 
-   async function saveMovieCard(item) {
+   async function saveMovieCard(movie) {
     try {
       const movieData = await mainApi.createMovieCard({
-        /* country: item.country,
-        director: item.director,
-        duration: item.duration,
-        year: item.year,
-        description: item.description,
-        image: item.image,
-        trailerLink: item.trailerLink,
-        thumbnail: item.thumbnail,
-        movieId: item.movieId,
-        nameRU: item.nameRU,
-        nameEN: item.nameEN, */
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: `${MOVIE_API}${movie.image.url}`,
+        trailerLink: movie.trailerLink,
+        thumbnail: `${MOVIE_API}${movie.image.formats.thumbnail.url}`,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
       });
       if (movieData) {
         setSaveCard([movieData, ...saveCard])
+      }
+    } catch(err) {
+      console.error(err)
+    }
+  }
+
+  const getSavedMovies = useCallback(
+    async () => {
+    try {
+      const savedMovie = await mainApi.getSavedMovies()
+      if (savedMovie) {
+        setSaveCard(savedMovie);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  async function deleteSavedMovie(movie) {
+    const savedMovie = saveCard.find(
+      (card) => card.movieId === movie.id || card.movieId === movie.movieId
+    );
+    try {
+      const data = await mainApi.deleteCard(savedMovie._id)
+      if (data) {
+        setSaveCard((state) => state.filter((movie) => movie._id !== savedMovie._id));
       }
     } catch(err) {
       console.error(err)
@@ -141,6 +180,12 @@ function App() {
     handleUserCheck();
   }, [ loggedIn, handleUserCheck ])
 
+  useEffect(() => {
+    if (loggedIn) {
+      getSavedMovies()
+    }
+  }, [ loggedIn, getSavedMovies ])
+
   return (
     <div className="app__content">
       <CurrentUserContext.Provider value={currentUser}>
@@ -150,41 +195,15 @@ function App() {
         />
         <Routes>
           <Route path='/' element={<Main loggedIn = {loggedIn}/>} />
-          {/* <Route path='/movies'
-            element={
-              <Movies
-                onBurgerClick = {handleBurgerMenuClick}
-                onSearch={getMoviesCards}
-                isSearchError={searchError}
-                isLoading={loading}
-                saveMovie={saveMovieCard}
-                loggedIn ={loggedIn}
-              />
-            }
-          />
-          <Route path='/saved-movies'
-            element={
-              <SavedMovies
-                onBurgerClick = {handleBurgerMenuClick}
-                savedMovie={saveCard}
-              />
-            }
-          />
-          <Route path='/profile'
-            element={
-              <Profile
-                onBurgerClick = {handleBurgerMenuClick}
-              />
-            }
-          /> */}
           <Route path='/movies'
             element = {
               <ProtectedRouteElement
                 element={Movies}
                 onBurgerClick = {handleBurgerMenuClick}
-                onSearch = {getMoviesCards}
+                SearchMovies = {getMoviesCards}
                 isSearchError = {searchError}
                 isLoading = {loading}
+                savedMovie = {saveCard}
                 saveMovie = {saveMovieCard}
                 loggedIn = {loggedIn}
               />
@@ -196,6 +215,8 @@ function App() {
                 element = {SavedMovies}
                 onBurgerClick = {handleBurgerMenuClick}
                 loggedIn = {loggedIn}
+                savedMovie = {saveCard}
+                deleteMovie = {deleteSavedMovie}
               />
             }
           />
@@ -207,6 +228,7 @@ function App() {
                 editProfile = {userProfileUpdate}
                 onLogOut = {handleUserLogOut}
                 loggedIn ={loggedIn}
+                isLoading = {loading}
               />
             }
           />
@@ -214,12 +236,14 @@ function App() {
             element={
             <Login
               onLogin = {handleUserAuthorization}
+              isLoading = {loading}
             />
           }/>
           <Route path='/signup'
             element={
             <Register
               onRegister = {handleUserRegistration}
+              isLoading = {loading}
             />
           }/>
           <Route path='*' element={<NotFound />} />

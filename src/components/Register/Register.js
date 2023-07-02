@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import Authentication from '../Authentication/Authentication.js';
 import Validation from '../Validation/Validation.js';
 
-function Register({ onRegister }) {
+function Register({ onRegister, isLoading }) {
   const { values, errors, isValid, onChange } = Validation();
 
   function handleSubmit(e) {
@@ -17,7 +17,7 @@ function Register({ onRegister }) {
       <Authentication
         name={'register'}
         title={'Добро пожаловать!'}
-        btnSubmit={'Зарегистрироваться'}
+        btnSubmit={isLoading ? 'Регистрация...': 'Зарегистрироваться'}
         isValid={isValid}
         isLogin={'Уже зарегистророваны?'}
         Auth={'Войти'}
@@ -56,6 +56,8 @@ function Register({ onRegister }) {
           id="password-input"
           className="auth__form-input"
           required
+          minLength={6}
+          maxLength={30}
           onChange={onChange}
           value={values.password || ''}
         />

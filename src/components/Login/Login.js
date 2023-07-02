@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import Authentication from '../Authentication/Authentication.js';
 import Validation from '../Validation/Validation.js';
 
-function Login({ onLogin }) {
+function Login({ onLogin, isLoading }) {
   const { values, errors, isValid, onChange } = Validation();
 
   function handleSubmit(e) {
@@ -17,7 +17,7 @@ function Login({ onLogin }) {
     <Authentication
     name={'login'}
     title={'Рады видеть!'}
-    btnSubmit={'Войти'}
+    btnSubmit={isLoading ? 'Вход' : 'Войти'}
     onSubmit={handleSubmit}
     isValid={isValid}
     isLogin={'Ещё не зарегистророваны?'}
@@ -28,7 +28,6 @@ function Login({ onLogin }) {
       <input
       type="email"
       name="email"
-      form="login"
       id="email-input"
       className="auth__form-input"
       required
@@ -40,8 +39,9 @@ function Login({ onLogin }) {
       <input
       type="password"
       name="password"
-      form="login"
       id="password-input"
+      minLength={6}
+      maxLength={30}
       className="auth__form-input"
       required
       onChange={onChange}

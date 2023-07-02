@@ -7,12 +7,16 @@ function Validation() {
   const [isValid, setValid] = useState(false);
 
   function onChange(e) {
-    const { name, value } = e.target;
-    const error = e.target.validationMessage;
-    const formValidation = e.target.closest('form').checkValidity();
-    setValues((values) => ({ ...values, [name]: value }));
-    setErrors((errors) => ({ ...errors, [name]: error }));
-    setValid(formValidation);
+    const target = e.target;
+    const { name, value } = target;
+    if (name === 'name' && !new RegExp(/^[а-яА-ЯёЁa-zA-Z]+$/).test(value)) {
+      target.setCustomValidity(
+        'В имени нельзя использовать цифры и символы'
+      );
+    }
+    setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: target.validationMessage });
+    setValid(target.closest('form').checkValidity());
   }
 
   const resetValidation = useCallback(

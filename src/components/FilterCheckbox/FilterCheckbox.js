@@ -9,7 +9,7 @@ function FilterCheckbox({ onFilter, isFilterOn, isSearch}) {
           className='checkbox__switch-input'
           type='checkbox'
           id='checkbox'
-          onChange={(e) => onFilter(e.target.checked)}
+          onChange={(evt) => onFilter(evt.target.checked)}
           isFilterOn={isFilterOn}
         />
         <div className='checkbox__slider round'></div>

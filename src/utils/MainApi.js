@@ -1,4 +1,5 @@
-const BASE_URL = 'http://localhost:3000';
+
+import { MAIN_API } from "./constants.js";
 
 const makeRequest = (url, method, body) => {
   const headers = { "Content-Type": "application/json" };
@@ -6,7 +7,7 @@ const makeRequest = (url, method, body) => {
   if (body !== undefined) {
     config.body = JSON.stringify(body);
   }
-  return fetch(`${BASE_URL}${url}`, config).then((res) => {
+  return fetch(`${MAIN_API}${url}`, config).then((res) => {
     return res.ok
       ? res.json()
       : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`);
@@ -34,7 +35,7 @@ export function setUserProfile({ name, email }) {
 }
 
 
-export function getCardsByOwner() {
+export function getSavedMovies() {
   return makeRequest( "/movies", "GET");
 }
 

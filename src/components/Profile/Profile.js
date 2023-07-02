@@ -4,18 +4,21 @@ import Header from '../Header/Header.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import Validation from '../Validation/Validation.js';
 
-function Profile({ onBurgerClick, editProfile, onLogOut }) {
+function Profile({ onBurgerClick, editProfile, onLogOut, isLoading }) {
   const currentUser = useContext(CurrentUserContext);
 
   const [ isClickEdit, setIsClickEdit ] = useState(false);
-  const [ editUser, setUserData] = useState(true);
 
-  const { values, errors, isValid, setValues, onChange } = Validation();
+  const { values, errors, isValid, setValues, onChange, resetValidation } = Validation();
+
+  useEffect(() => {
+    resetValidation(currentUser,false);
+  }, [resetValidation, currentUser]);
 
   useEffect(() => {
     setValues({
       name: currentUser.name,
-      email: currentUser.email});;
+      email: currentUser.email});
   }, [currentUser.name, currentUser.email, setValues]);
 
   const handleEditClick = () => {
@@ -28,8 +31,10 @@ function Profile({ onBurgerClick, editProfile, onLogOut }) {
         <>
           <button
             className='profile__btn profile__btn_save'
-            type='submit'>
-              Сохранить
+            type='submit'
+            form='profile'
+            disabled={!isValid}>
+              {isLoading ? 'Сохранение...' : 'Сохранить'}
           </button>
         </>
       )
@@ -50,28 +55,25 @@ function Profile({ onBurgerClick, editProfile, onLogOut }) {
       <Header onBurgerClick={ onBurgerClick }/>
       <section className='profile__wrapper'>
         <h1 className='profile__title'>Привет, {currentUser.name}!</h1>
-        <form className='profile__form-edit' name='profile' onSubmit={handleSubmit}>
+        <form className='profile__form-edit' name='profile' onSubmit={handleSubmit} noValidate>
           <label className='profile__form-wrapper'>
             Имя
             <input
-              type="name"
-              name="name"
-              form="profile"
-              id="name-input"
-              className="profile__form-input"
+              type='name'
+              name='name'
+              className='profile__form-input'
               required
               disabled={!isClickEdit}
               value={values.name || ''}
               onChange={onChange}
             />
           </label>
+          <span className={`profile__form-error ${errors.name ? 'profile__form-error_active' : ''}`}>{errors.name || ''}</span>
           <label className='profile__form-wrapper'>
             Email
             <input
-              type="email"
-              name="email"
-              form="profile"
-              id="email-input"
+              type='email'
+              name='email'
               className="profile__form-input"
               required
               disabled={!isClickEdit}
@@ -79,6 +81,7 @@ function Profile({ onBurgerClick, editProfile, onLogOut }) {
               onChange={onChange}
             />
           </label>
+          <span className={`profile__form-error ${errors.email ? 'profile__form-error_active' : ''}`}>{errors.email || ''}</span>
           {btnDataSave()}
         </form>
         <div className='profile__btn-wrapper'>

@@ -21,9 +21,9 @@ function Authentication({ title, name, btnSubmit, isValid, isLogin, Auth, childr
           <button
             type='submit'
             className='auth__submit-button'
-            disabled={isValid ? false : true}
-            >
-              {btnSubmit}
+            disabled={!isValid}
+          >
+            {btnSubmit}
           </button>
           <Link className='auth__link' to={Route}>{isLogin}<span className='auth__link-span'>{Auth}</span></Link>
         </form>

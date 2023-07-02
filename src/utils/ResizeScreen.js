@@ -1,35 +1,34 @@
-// IMPORT PACKAGES
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 
-// USE RESIZE SCREEN HOOK
 function useResizeScreen() {
-  // HOOKS
-  const getScreenWidth = useCallback(() => window.innerWidth, []);
-  const [screenWidth, setScreenWidth] = useState(getScreenWidth());
+  const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints;
+  const [screenWidth, setScreenWidth] = useState(isTouchScreen ? window.screen.width : window.innerWidth);
 
-  // SET AND REMOVE EVENT LISTENERS
   useEffect(() => {
-    // VARIABLES
     let timer;
 
-    // HANDLER SCREEN RESIZE
     function handleScreenResize() {
-      setScreenWidth(getScreenWidth());
+      setScreenWidth(isTouchScreen ? window.screen.width : window.innerWidth);
     }
 
-    // HANDLER SET TIMEOUT
     function handleSetTimeout() {
+      clearTimeout(timer);
+      timer = setTimeout(handleScreenResize, 1000);
+    }
+
+    function handleResize() {
       if (!timer) {
-        timer = setTimeout(() => {
-          timer = null;
-          handleScreenResize();
-        }, 1000);
+        handleSetTimeout();
       }
     }
 
-    window.addEventListener("resize", handleSetTimeout);
-    return () => window.removeEventListener("resize", handleSetTimeout);
-  }, [getScreenWidth]);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isTouchScreen]);
 
   return screenWidth;
 }
