@@ -27,7 +27,6 @@ function Register({ onRegister, isLoading }) {
         <input
           type="name"
           name="name"
-          form="register"
           id="name-input"
           className="auth__form-input"
           required
@@ -39,7 +38,6 @@ function Register({ onRegister, isLoading }) {
         <input
           type="email"
           name="email"
-          form="register"
           id="email-input"
           className="auth__form-input"
           required
