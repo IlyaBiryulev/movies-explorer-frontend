@@ -5,7 +5,6 @@ import useResizeScreen from "../../utils/ResizeScreen";
 import Header from '../Header/Header.js';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
-import ShowMore from '../ShowMore/ShowMore.js';
 import Footer from '../Footer/Footer.js'
 
 import {
@@ -92,25 +91,6 @@ function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMov
     },
     [movieFound]
   );
-
-  /* const handleShowMore = () => {
-    const initialMoviesToShow = initialMovies.length;
-    const MoreMoviesToShow = cardRender.more;
-    const MoviesToShow = initialMoviesToShow + MoreMoviesToShow;
-    if (movieCard.length > 0) {
-      const movieElement = movieCard.slice(initialMoviesToShow, MoviesToShow);
-      setMovieCard([...movieCard, ...movieElement]);
-    }
-  }; */
-
-  const initialMoviesToShow = cardRender.movie;
-  const moviesToShowMore = cardRender.more;
-  const [moviesToShow, setMoviesToShow] = useState(initialMoviesToShow)
-
-  const handleShowMore = () => {
-    setMoviesToShow(moviesToShow + moviesToShowMore);
-  };
-
 
   useEffect(() => {
     if (localStorage.getItem('foundMoviesList') && localStorage.getItem('filterMovies')) {

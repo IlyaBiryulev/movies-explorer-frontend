@@ -17,7 +17,7 @@ const initialCard = {
   }
 }
 
-const MAIN_API = 'http://localhost:3000';
+const MAIN_API = 'https://api.moviedomen.nomoredomains.rocks';
 const MOVIE_API = 'https://api.nomoreparties.co';
 
 export {
