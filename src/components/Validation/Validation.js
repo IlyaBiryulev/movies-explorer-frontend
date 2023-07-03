@@ -9,11 +9,6 @@ function Validation() {
   function onChange(e) {
     const target = e.target;
     const { name, value } = target;
-    if (name === 'name' && !new RegExp(/^[а-яА-ЯёЁa-zA-Z]+$/).test(value)) {
-      target.setCustomValidity(
-        'В имени нельзя использовать цифры и символы'
-      );
-    }
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: target.validationMessage });
     setValid(target.closest('form').checkValidity());

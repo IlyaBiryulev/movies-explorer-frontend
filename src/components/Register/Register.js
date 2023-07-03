@@ -17,11 +17,11 @@ function Register({ onRegister, isLoading }) {
         name={'register'}
         title={'Добро пожаловать!'}
         btnSubmit={isLoading ? 'Регистрация...': 'Зарегистрироваться'}
+        onSubmit={handleSubmit}
         isValid={isValid}
         isLogin={'Уже зарегистророваны?'}
         Auth={'Войти'}
         Route={'/signin'}
-        onSubmit={handleSubmit}
       >
         <p className='auth__placeholder'>Имя</p>
         <input
@@ -29,11 +29,12 @@ function Register({ onRegister, isLoading }) {
           name="name"
           id="name-input"
           className="auth__form-input"
+          pattern='^[а-яА-ЯёЁa-zA-Z]+$'
           required
           onChange={onChange}
           value={values.name || ''}
         />
-        <span className={`auth__form-input-error ${errors.name ? 'auth__form-input-error_active' : ''}`}>{errors.name || ''}</span>
+        <span className={`auth__form-input-error ${errors.name ? 'auth__form-input-error_active' : ''}`}>{errors.name}</span>
         <p className='auth__placeholder'>E-mail</p>
         <input
           type="email"
@@ -44,7 +45,7 @@ function Register({ onRegister, isLoading }) {
           onChange={onChange}
           value={values.email || ''}
         />
-        <span className={`auth__form-input-error ${errors.email ? 'auth__form-input-error_active' : ''}`}>{errors.email || ''}</span>
+        <span className={`auth__form-input-error ${errors.email ? 'auth__form-input-error_active' : ''}`}>{errors.email}</span>
         <p className='auth__placeholder'>Пароль</p>
         <input
           type="password"
@@ -57,7 +58,7 @@ function Register({ onRegister, isLoading }) {
           onChange={onChange}
           value={values.password || ''}
         />
-        <span className={`auth__form-input-error ${errors.email ? 'auth__form-input-error_active' : ''}`}>{errors.password || ''}</span>
+        <span className={`auth__form-input-error ${errors.email ? 'auth__form-input-error_active' : ''}`}>{errors.password}</span>
       </Authentication>
     </main>
   );
