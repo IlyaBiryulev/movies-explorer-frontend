@@ -49,7 +49,6 @@ function Register({ onRegister, isLoading }) {
         <input
           type="password"
           name="password"
-          form="register"
           id="password-input"
           className="auth__form-input"
           required
