@@ -1,19 +1,11 @@
-import React, { useState } from "react";
-
 import './MoviesCard.css';
 
 import { useLocation } from 'react-router-dom';
 
-const CountDuration = (minutes) => {
-  const hours = Math.floor(minutes / 60);
-  const min = minutes % 60;
-  return `${hours}ч ${min < 10 ? '0' : ''}${min}м`;
-}
+import { CountDuration } from '../../utils/utils.js';
 
-function MoviesCard({ movie, saveMovie, isSaveMovie, onDelete, savedMovie }) {
+function MoviesCard({ movie, saveMovie, onDelete, savedMovie }) {
   const location = useLocation();
-
-  const [ saveBtnStatus, setSaveBtnStatus] = useState(false);
 
   const handleSaveClick = () => {
     saveMovie(movie);

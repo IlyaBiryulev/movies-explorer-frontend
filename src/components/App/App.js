@@ -113,7 +113,8 @@ function App() {
         return data;
       }
     } catch(err) {
-      console.error(err)
+      console.error(err);
+      setSearchError(true);
     } finally {
       setLoading(false);
     }
@@ -138,14 +139,14 @@ function App() {
         setSaveCard([movieData, ...saveCard])
       }
     } catch(err) {
-      console.error(err)
+      console.error(err);
     }
   }
 
   const getSavedMovies = useCallback(
     async () => {
     try {
-      const savedMovie = await mainApi.getSavedMovies()
+      const savedMovie = await mainApi.getSavedMovies();
       if (savedMovie) {
         setSaveCard(savedMovie);
       }

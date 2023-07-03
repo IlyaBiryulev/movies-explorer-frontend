@@ -1,5 +1,4 @@
 import './Register.css';
-import { Navigate } from "react-router-dom";
 
 import Authentication from '../Authentication/Authentication.js';
 import Validation from '../Validation/Validation.js';

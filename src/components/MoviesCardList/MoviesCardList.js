@@ -4,12 +4,15 @@ import './MoviesCardList.css';
 
 import MoviesCard from '../MoviesCard/MoviesCard.js';
 import Preloader from '../Preloader/Preloader.js';
+import ShowMore from '../ShowMore/ShowMore.js';
 
 
 function MoviesCardList({ movies, cardRender, movieNotFound, isSearchError, isLoading, saveMovie, savedMovie, onDelete }) {
   const location = useLocation();
 
   const [ movieCard, setMovieCard ] = useState([]);
+  const [ visibleMoviesCount, setVisibleMoviesCount ] = useState(movieCard.length);
+
 
   useEffect(() => {
     if (location.pathname === '/movies' && movies.length) {
@@ -25,6 +28,15 @@ function MoviesCardList({ movies, cardRender, movieNotFound, isSearchError, isLo
       setMovieCard(movies);
     }
   }, [location.pathname, movies]);
+
+  const handleShowMore = () => {
+    const MoviesToShow = visibleMoviesCount + cardRender.more;
+    if (movies.length > 0) {
+      const movieElement = movies.slice(visibleMoviesCount, MoviesToShow);
+      setMovieCard([...movieCard, ...movieElement]);
+      setVisibleMoviesCount(MoviesToShow)
+    }
+  };
 
   const handleLoading = () => {
     if (isLoading) {
@@ -62,11 +74,19 @@ function MoviesCardList({ movies, cardRender, movieNotFound, isSearchError, isLo
     }
   }
 
+  const ifShowMore = () => {
+    if ( location.pathname === '/movies' && movies.length > 5 && visibleMoviesCount < movies.length) {
+      return(<ShowMore onClick={handleShowMore}/>)
+    }
+  }
+
+
   return (
     <section className='movies-card-list'>
       {!localStorage.getItem('MovieSearch') && movies.length === 0 && null}
       {SearchResult()}
       {handleLoading()}
+      {ifShowMore()}
     </section>
   );
 }

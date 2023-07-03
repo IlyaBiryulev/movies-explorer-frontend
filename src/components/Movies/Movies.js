@@ -93,19 +93,28 @@ function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMov
     [movieFound]
   );
 
-  const handleShowMore = () => {
+  /* const handleShowMore = () => {
     const initialMoviesToShow = initialMovies.length;
     const MoreMoviesToShow = cardRender.more;
-    const MoviesToShow = initialMoviesToShow + MoreMoviesToShow
+    const MoviesToShow = initialMoviesToShow + MoreMoviesToShow;
     if (movieCard.length > 0) {
       const movieElement = movieCard.slice(initialMoviesToShow, MoviesToShow);
       setMovieCard([...movieCard, ...movieElement]);
     }
+  }; */
+
+  const initialMoviesToShow = cardRender.movie;
+  const moviesToShowMore = cardRender.more;
+  const [moviesToShow, setMoviesToShow] = useState(initialMoviesToShow)
+
+  const handleShowMore = () => {
+    setMoviesToShow(moviesToShow + moviesToShowMore);
   };
 
+
   useEffect(() => {
-    if (localStorage.getItem('foundMoviesList') && localStorage.getItem('foundMoviesList')) {
-      const filter = JSON.parse(localStorage.getItem('foundMoviesList'));
+    if (localStorage.getItem('foundMoviesList') && localStorage.getItem('filterMovies')) {
+      const filter = JSON.parse(localStorage.getItem('filterMovies'));
       setFilterOn(filter);
       const MovieList = JSON.parse(localStorage.getItem('foundMoviesList'));
       setMovieFound(MovieList);
@@ -139,7 +148,6 @@ function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMov
         saveMovie={saveMovie}
         savedMovie={savedMovie}
       />
-      <ShowMore onClick={handleShowMore}/>
       <Footer />
     </main>
   );

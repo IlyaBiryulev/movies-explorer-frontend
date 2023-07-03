@@ -6,7 +6,6 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Footer from '../Footer/Footer.js'
 
-
 function SavedMovies({ onBurgerClick, savedMovie, deleteMovie }) {
 
   const [ movieCard,         setMovieCard       ] = useState([]);
@@ -14,40 +13,6 @@ function SavedMovies({ onBurgerClick, savedMovie, deleteMovie }) {
   const [ movieNotFound,     setMovieNotFound   ] = useState([]);
   const [ isSearch,          setIsSearch        ] = useState(false);
   const [ isFilterOn,        setFilterOn        ] = useState(false);
-
-  /* function handleMovieFiltering(movies, isFilterOn, isSavedMovies) {
-    if (!isSavedMovies) {
-      localStorage.setItem("isMoviesFilterOn", isFilterOn);
-    } else {
-      localStorage.setItem("isSavedMoviesFilterOn", isFilterOn);
-    }
-    if (isFilterOn) {
-      const result = movies.filter((movie) => movie.duration <= 40);
-      return result;
-    } else {
-      return movies;
-    }
-  } */
-
-  // MOVIE SEARCH HANDLER
-  /* function handleMovieSearch(movies, searchQuery, isSavedMovies) {
-    const normalizeSearchQuery = searchQuery.toLowerCase().trim();
-    const result = movies.filter((movie) => {
-      const normalizeNameRu = movie.nameRU.toLowerCase().trim();
-      const normalizeNameEn = movie.nameEN.toLowerCase().trim();
-      return (
-        normalizeNameRu.includes(normalizeSearchQuery) ||
-        normalizeNameEn.includes(normalizeSearchQuery)
-      );
-    });
-    if (!isSavedMovies) {
-      localStorage.setItem("foundMovies", JSON.stringify(result));
-      localStorage.setItem("moviesSearchQuery", normalizeSearchQuery);
-    } else {
-      localStorage.setItem("savedMoviesSearchQuery", normalizeSearchQuery);
-    }
-    return result;
-  } */
 
   function movieFilter(movies, onCheckbox) {
     const shortMovie = movies.filter((movie) => {
@@ -70,34 +35,6 @@ function SavedMovies({ onBurgerClick, savedMovie, deleteMovie }) {
     localStorage.setItem('savedMovies', query.toLowerCase().trim());
     return movieResult;
   }
-
-  /* const handleSearchMovieSubmit = useCallback(
-    (searchQuery) => {
-      setMovieNotFound(false);
-      setIsSearch(true);
-      if (savedMovie.length) {
-        const found = searchMovie(savedMovie, searchQuery, true);
-        setMovieFiltered(found);
-        if (!found.length) {
-          setMovieNotFound(true);
-          setIsSearch(false);
-          setMovieCard(found);
-        } else {
-          const filtered = movieFilter(found, isFilterOn, true);
-          setIsSearch(false);
-          setMovieCard(filtered);
-          if (!filtered.length) {
-            setIsSearch(false);
-            setMovieNotFound(true);
-          }
-        }
-      } else {
-        setIsSearch(false);
-        setMovieNotFound(true);
-      }
-    },
-    [savedMovie, isFilterOn]
-  ); */
 
   const handleSearchMovieSubmit = useCallback((searchQuery) => {
     setMovieNotFound(false);
