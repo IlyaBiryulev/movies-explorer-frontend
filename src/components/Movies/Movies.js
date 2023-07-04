@@ -12,6 +12,7 @@ import {
   padScreenWidth,
   mobileScreenWidth,
   initialCard,
+  SHORT_MOVIE_DURATION,
 } from '../../utils/constants.js'
 
 function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMovie, savedMovie }) {
@@ -41,7 +42,7 @@ function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMov
 
   function movieFilter(movies, onCheckbox) {
     const shortMovie = movies.filter((movie) => {
-      return movie.duration <= 40;
+      return movie.duration <= SHORT_MOVIE_DURATION;
     });
 
     localStorage.setItem("filterMovies", onCheckbox);

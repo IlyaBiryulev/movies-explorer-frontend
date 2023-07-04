@@ -17,8 +17,11 @@ const initialCard = {
   }
 }
 
-const MAIN_API = 'https://api.moviedomen.nomoredomains.rocks';
+/* const MAIN_API = 'https://api.moviedomen.nomoredomains.rocks'; */
+const MAIN_API = 'http://localhost:3000';
 const MOVIE_API = 'https://api.nomoreparties.co';
+
+const SHORT_MOVIE_DURATION = 40;
 
 export {
   desktopScreenWidth,
@@ -26,5 +29,6 @@ export {
   mobileScreenWidth,
   initialCard,
   MOVIE_API,
-  MAIN_API
+  MAIN_API,
+  SHORT_MOVIE_DURATION
 }

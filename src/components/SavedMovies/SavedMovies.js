@@ -6,6 +6,8 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Footer from '../Footer/Footer.js'
 
+import { SHORT_MOVIE_DURATION } from '../../utils/constants.js';
+
 function SavedMovies({ onBurgerClick, savedMovie, deleteMovie }) {
 
   const [ movieCard,         setMovieCard       ] = useState([]);
@@ -16,7 +18,7 @@ function SavedMovies({ onBurgerClick, savedMovie, deleteMovie }) {
 
   function movieFilter(movies, onCheckbox) {
     const shortMovie = movies.filter((movie) => {
-      return movie.duration <= 40;
+      return movie.duration <= SHORT_MOVIE_DURATION;
     });
 
     localStorage.setItem("filterSavedMovies", onCheckbox);
