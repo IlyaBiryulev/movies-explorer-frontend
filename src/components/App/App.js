@@ -98,7 +98,7 @@ function App() {
         setCurrentUser({});
         setSaveCard([]);
         localStorage.clear();
-        navigate('/signin', { replace: true });
+        navigate('/', { replace: true });
       }
     } catch (err) {
       console.error(err);
