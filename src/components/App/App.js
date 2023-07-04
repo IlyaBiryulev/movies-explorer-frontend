@@ -207,6 +207,7 @@ function App() {
                 isLoading = {loading}
                 savedMovie = {saveCard}
                 saveMovie = {saveMovieCard}
+                deleteMovie = {deleteSavedMovie}
                 loggedIn = {loggedIn}
               />
             }

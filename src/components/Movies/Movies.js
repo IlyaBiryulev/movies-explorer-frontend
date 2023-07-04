@@ -15,7 +15,7 @@ import {
   SHORT_MOVIE_DURATION,
 } from '../../utils/constants.js'
 
-function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMovie, savedMovie }) {
+function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMovie, savedMovie, deleteMovie }) {
 
   const Screen = useResizeScreen();
 
@@ -128,6 +128,7 @@ function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMov
         isLoading={isLoading}
         saveMovie={saveMovie}
         savedMovie={savedMovie}
+        onDelete={deleteMovie}
       />
       <Footer />
     </main>

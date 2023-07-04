@@ -29,7 +29,7 @@ function MoviesCard({ movie, saveMovie, onDelete, savedMovie }) {
       <button
         className={`movies-card__save-btn ${saveMovieStatus ? 'movies-card__save-btn_active' : ''}`}
         type="button"
-        onClick={handleSaveClick}
+        onClick={saveMovieStatus ? handleDeleteClick : handleSaveClick}
         >
       </button>)
     } else if (location.pathname === '/saved-movies') {
