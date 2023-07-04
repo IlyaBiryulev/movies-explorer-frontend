@@ -30,9 +30,11 @@ function MoviesCardList({ movies, cardRender, movieNotFound, isSearchError, isLo
   }, [location.pathname, movies]);
 
   const handleShowMore = () => {
-    const MoviesToShow = visibleMoviesCount + cardRender.more;
-    if (movies.length > 0) {
-      const movieElement = movies.slice(visibleMoviesCount, MoviesToShow);
+    const initialMoviesCount =  movieCard.length;
+    const MoviesToShow = initialMoviesCount + cardRender.more;
+    const moviesCount = movies.length -  initialMoviesCount;
+    if ( moviesCount > 0) {
+      const movieElement = movies.slice(initialMoviesCount, MoviesToShow);
       setMovieCard([...movieCard, ...movieElement]);
       setVisibleMoviesCount(MoviesToShow)
     }
@@ -75,7 +77,7 @@ function MoviesCardList({ movies, cardRender, movieNotFound, isSearchError, isLo
   }
 
   const ifShowMore = () => {
-    if ( location.pathname === '/movies' && movies.length > 5 && visibleMoviesCount < movies.length) {
+    if ( location.pathname === '/movies' && movies.length > 5 && movieCard.length < movies.length) {
       return(<ShowMore onClick={handleShowMore}/>)
     }
   }
