@@ -1,9 +1,10 @@
 import './Login.css';
+import { Navigate } from "react-router-dom";
 
 import Authentication from '../Authentication/Authentication.js';
 import Validation from '../Validation/Validation.js';
 
-function Login({ onLogin, isLoading }) {
+function Login({ onLogin, isLoading, loggedIn }) {
   const { values, errors, isValid, onChange } = Validation();
 
   function handleSubmit(e) {
@@ -11,7 +12,9 @@ function Login({ onLogin, isLoading }) {
     onLogin(values);
   }
 
-  return (
+  return loggedIn ? (
+    <Navigate to="/" replace />
+  ) : (
     <main>
     <Authentication
     name={'login'}

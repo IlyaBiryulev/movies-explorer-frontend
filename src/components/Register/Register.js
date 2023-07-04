@@ -1,9 +1,10 @@
 import './Register.css';
+import { Navigate } from "react-router-dom";
 
 import Authentication from '../Authentication/Authentication.js';
 import Validation from '../Validation/Validation.js';
 
-function Register({ onRegister, isLoading }) {
+function Register({ onRegister, isLoading, loggedIn }) {
   const { values, errors, isValid, onChange } = Validation();
 
   function handleSubmit(e) {
@@ -11,7 +12,9 @@ function Register({ onRegister, isLoading }) {
     onRegister(values)
   }
 
-  return  (
+  return loggedIn ? (
+    <Navigate to="/" replace />
+  ) : (
     <main>
       <Authentication
         name={'register'}

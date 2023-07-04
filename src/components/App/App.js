@@ -238,6 +238,7 @@ function App() {
             <Login
               onLogin = {handleUserAuthorization}
               isLoading = {loading}
+              loggedIn ={loggedIn}
             />
           }/>
           <Route path='/signup'
@@ -245,6 +246,7 @@ function App() {
             <Register
               onRegister = {handleUserRegistration}
               isLoading = {loading}
+              loggedIn ={loggedIn}
             />
           }/>
           <Route path='*' element={<NotFound />} />
