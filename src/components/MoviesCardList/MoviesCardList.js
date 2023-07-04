@@ -77,7 +77,7 @@ function MoviesCardList({ movies, cardRender, movieNotFound, isSearchError, isLo
   }
 
   const ifShowMore = () => {
-    if ( location.pathname === '/movies' && movies.length > 5 && movieCard.length < movies.length) {
+    if ( location.pathname === '/movies' && movies.length > 5 && visibleMoviesCount < movies.length) {
       return(<ShowMore onClick={handleShowMore}/>)
     }
   }
