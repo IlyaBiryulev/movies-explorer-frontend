@@ -63,6 +63,21 @@ function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMov
     return movieResult;
   }
 
+  const handleSearch = useCallback(
+    (cards, query) => {
+      const found = searchMovie(cards, query);
+      setMovieFound(found);
+
+      const isFound = found.length > 0;
+      const filtered = isFound ? movieFilter(found, isFilterOn) : [];
+
+      setMovieCard(filtered);
+      setIsSearch(false);
+      setMovieNotFound(!isFound || filtered.length === 0);
+    },
+    [isFilterOn]
+  );
+
   const handleSearchMovieSubmit = useCallback(
     async (query) => {
       setMovieNotFound(false);
@@ -71,15 +86,13 @@ function Movies({ onBurgerClick, SearchMovies, isSearchError, isLoading, saveMov
         const moviesData = await SearchMovies();
         if (moviesData) {
           setInitialMovies(moviesData);
+          handleSearch(moviesData, query);
         }
+      } else {
+        handleSearch(initialMovies, query);
       }
-      const foundMovies = searchMovie(initialMovies, query);
-      const filteredMovies = movieFilter(foundMovies, isFilterOn);
-      setMovieFound(foundMovies);
-      setMovieCard(filteredMovies);
-      setMovieNotFound(filteredMovies.length === 0);
     },
-    [initialMovies, isFilterOn, SearchMovies]
+    [SearchMovies, handleSearch, initialMovies]
   );
 
   const handleOnFilterClick = useCallback(
