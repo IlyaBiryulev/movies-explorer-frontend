@@ -30,22 +30,6 @@ function App() {
   const [ searchError,      setSearchError      ] = useState(false);
   const [ saveCard,         setSaveCard         ] = useState([]);
 
-  const handleUserRegistration = useCallback(
-    async({ name, email, password }) => {
-      setLoading(true);
-      try {
-        const userData = await mainApi.register({ name, email, password })
-        if (userData) {
-          navigate('/signin', {replace: true})
-        }
-      } catch(err) {
-        console.error(err)
-      } finally {
-        setLoading(false);
-      }
-    }, [navigate]
-  )
-
   const handleUserAuthorization = useCallback(
     async({ email, password }) => {
       setLoading(true);
@@ -61,7 +45,24 @@ function App() {
         setLoading(false);
       }
     }, [navigate]
-  )
+  );
+
+  const handleUserRegistration = useCallback(
+    async({ name, email, password }) => {
+      setLoading(true);
+      try {
+        const userData = await mainApi.register({ name, email, password })
+        if (userData) {
+          handleUserAuthorization({ email, password })
+          navigate('/movies', {replace: true})
+        }
+      } catch(err) {
+        console.error(err)
+      } finally {
+        setLoading(false);
+      }
+    }, [handleUserAuthorization, navigate]
+  );
 
   const handleUserCheck = useCallback(
     async() => {
@@ -73,7 +74,7 @@ function App() {
         console.error(err);
       }
     }, []
-  )
+  );
 
   async function userProfileUpdate ({ name, email }) {
     setLoading(true);
@@ -87,7 +88,7 @@ function App() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const handleUserLogOut = useCallback(
     async () => {
@@ -120,7 +121,7 @@ function App() {
     }
   }
 
-   async function saveMovieCard(movie) {
+  async function saveMovieCard(movie) {
     try {
       const movieData = await mainApi.createMovieCard({
         country: movie.country,
