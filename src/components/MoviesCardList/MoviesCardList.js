@@ -60,7 +60,7 @@ function MoviesCardList({ movies, cardRender, movieNotFound, isSearchError, isLo
     }
     if (movies.length !== 0 && !movieNotFound) {
       return(
-      <div className='movies-card-list__items'>
+      <div className={`movies-card-list__items ${movieCard.length > 3 ? 'movies-card-list__items_justify-content' : ''}`}>
         {movieCard.map((movie) =>
           <MoviesCard
             movie={movie}

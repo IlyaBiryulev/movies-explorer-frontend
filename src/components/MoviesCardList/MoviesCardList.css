@@ -10,10 +10,12 @@
 .movies-card-list__items {
   display: grid;
   grid-template-columns: repeat(auto-fit, 270px);
-  /* grid-template-rows: repeat(3, 1fr); */
   column-gap: 20px;
   row-gap: 32px;
-  justify-content: center;
+}
+
+.movies-card-list__items_justify-content {
+  justify-content: space-evenly;
 }
 
 .movies-card-list__status {
