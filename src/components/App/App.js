@@ -188,11 +188,11 @@ function App() {
   }, [ loggedIn, getSavedMovies ])
 
   return (
-    <div className="app__content">
-      <CurrentUserContext.Provider value={currentUser}>
+    <div className='app__content'>
+      <CurrentUserContext.Provider value = {currentUser}>
         <HamburgerMenu
-          isOpen={isBurgerMenuOpen}
-          onBurgerClick={handleBurgerMenuClick}
+          isOpen = {isBurgerMenuOpen}
+          onBurgerClick = {handleBurgerMenuClick}
         />
         <Routes>
           <Route path='/' element={<Main loggedIn = {loggedIn}/>} />
@@ -228,25 +228,25 @@ function App() {
                 onBurgerClick = {handleBurgerMenuClick}
                 editProfile = {userProfileUpdate}
                 onLogOut = {handleUserLogOut}
-                loggedIn ={loggedIn}
+                loggedIn = {loggedIn}
                 isLoading = {loading}
               />
             }
           />
           <Route path='/signin'
-            element={
+            element = {
             <Login
               onLogin = {handleUserAuthorization}
               isLoading = {loading}
-              loggedIn ={loggedIn}
+              loggedIn = {loggedIn}
             />
           }/>
           <Route path='/signup'
-            element={
+            element = {
             <Register
               onRegister = {handleUserRegistration}
               isLoading = {loading}
-              loggedIn ={loggedIn}
+              loggedIn = {loggedIn}
             />
           }/>
           <Route path='*' element={<NotFound />} />
