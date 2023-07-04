@@ -68,8 +68,10 @@ function App() {
     async() => {
       try {
         const userData = await mainApi.getUserInfo()
-        setLoggedIn(true);
-        setCurrentUser(userData);
+        if (userData) {
+          setLoggedIn(true);
+          setCurrentUser(userData);
+        }
       } catch(err) {
         console.error(err);
       }
@@ -184,7 +186,7 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      getSavedMovies()
+      getSavedMovies();
     }
   }, [ loggedIn, getSavedMovies ])
 

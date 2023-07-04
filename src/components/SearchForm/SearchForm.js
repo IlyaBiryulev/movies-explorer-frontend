@@ -42,6 +42,7 @@ function SearchForm({onSearch, onFilter, isFilterOn, isSearch}) {
             name='search'
             type='text'
             placeholder='Фильм'
+            disabled={isSearch ? true : false}
             required
             onChange={(e) => setMovieQuery(e.target.value)}
             value={movieQuery || ''}

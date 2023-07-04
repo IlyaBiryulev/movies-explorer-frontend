@@ -33,6 +33,7 @@ function Login({ onLogin, isLoading, loggedIn }) {
       id="email-input"
       className="auth__form-input"
       required
+      disabled={isLoading ? true : false}
       onChange={onChange}
       value={values.email || ''}
       />
@@ -46,6 +47,7 @@ function Login({ onLogin, isLoading, loggedIn }) {
       maxLength={30}
       className="auth__form-input"
       required
+      disabled={isLoading ? true : false}
       onChange={onChange}
       value={values.password || ''}
       />
