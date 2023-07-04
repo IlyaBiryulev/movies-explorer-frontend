@@ -32,7 +32,6 @@ function Profile({ onBurgerClick, editProfile, onLogOut, isLoading }) {
           <button
             className='profile__btn profile__btn_save'
             type='submit'
-            form='profile'
             disabled={!isValid}>
               {isLoading ? 'Сохранение...' : 'Сохранить'}
           </button>
