@@ -82,8 +82,6 @@ function App() {
         }
       } catch(err) {
         console.error(err);
-        setIsError(true);
-        setIsInfoToolTipOpen(true);
       }
     }, []
   );
