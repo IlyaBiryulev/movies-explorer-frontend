@@ -16,9 +16,9 @@ const initialCard = {
     more: 2,
   }
 }
-
-const MAIN_API = 'https://api.moviedomen.nomoredomains.rocks';
-/* const MAIN_API = 'http://localhost:3000'; //api для разработки */
+/*
+const MAIN_API = 'https://api.moviedomen.nomoredomains.rocks'; */
+const MAIN_API = 'http://localhost:3000'; //api для разработки
 const MOVIE_API = 'https://api.nomoreparties.co';
 
 const SHORT_MOVIE_DURATION = 40;
