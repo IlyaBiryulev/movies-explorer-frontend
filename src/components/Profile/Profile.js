@@ -7,19 +7,25 @@ import Validation from '../Validation/Validation.js';
 function Profile({ onBurgerClick, editProfile, onLogOut, isLoading }) {
   const currentUser = useContext(CurrentUserContext);
 
-  const [ isClickEdit, setIsClickEdit ] = useState(false);
+  const [ isCurrentUser, setIsCurrentUser ] = useState(true);
+  const [ isClickEdit,   setIsClickEdit   ] = useState(false);
 
-  const { values, errors, isValid, setValues, onChange, resetValidation } = Validation();
+  const { values, errors, isValid, onChange, resetValidation } = Validation();
+
+  useEffect(() => {
+    if (currentUser.name !== values.name || currentUser.email !== values.email) {
+      setIsCurrentUser(false)
+    } else {
+      setIsCurrentUser(true);
+    }
+  }, [currentUser, values]);
+
 
   useEffect(() => {
     resetValidation(currentUser,false);
   }, [resetValidation, currentUser]);
 
-  useEffect(() => {
-    setValues({
-      name: currentUser.name,
-      email: currentUser.email});
-  }, [currentUser.name, currentUser.email, setValues]);
+
 
   const handleEditClick = () => {
     setIsClickEdit(!isClickEdit);
@@ -32,7 +38,7 @@ function Profile({ onBurgerClick, editProfile, onLogOut, isLoading }) {
           <button
             className='profile__btn profile__btn_save'
             type='submit'
-            disabled={!isValid}>
+            disabled={isValid && !isCurrentUser ? false : true}>
               {isLoading ? 'Сохранение...' : 'Сохранить'}
           </button>
         </>
