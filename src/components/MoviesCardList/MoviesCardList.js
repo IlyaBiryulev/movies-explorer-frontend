@@ -11,7 +11,6 @@ function MoviesCardList({ movies, cardRender, movieNotFound, isSearchError, isLo
   const location = useLocation();
 
   const [ movieCard, setMovieCard ] = useState([]);
-  const [ visibleMoviesCount, setVisibleMoviesCount ] = useState(movieCard.length);
 
 
   useEffect(() => {
@@ -36,7 +35,6 @@ function MoviesCardList({ movies, cardRender, movieNotFound, isSearchError, isLo
     if ( moviesCount > 0) {
       const movieElement = movies.slice(initialMoviesCount, MoviesToShow);
       setMovieCard([...movieCard, ...movieElement]);
-      setVisibleMoviesCount(MoviesToShow)
     }
   };
 
@@ -77,7 +75,7 @@ function MoviesCardList({ movies, cardRender, movieNotFound, isSearchError, isLo
   }
 
   const ifShowMore = () => {
-    if ( location.pathname === '/movies' && movies.length > 5 && visibleMoviesCount < movies.length) {
+    if ( location.pathname === '/movies' && movies.length >= 5 && movieCard.length < movies.length) {
       return(<ShowMore onClick={handleShowMore}/>)
     }
   }
