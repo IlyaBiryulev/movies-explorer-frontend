@@ -12,6 +12,7 @@ import NotFound from '../NotFound/NotFound.js';
 import HamburgerMenu from '../HamburgerMenu/HamburgerMenu.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute.js';
+import InfoTooltip from '../infoTooltip/InfoTooltip.js';
 
 import * as mainApi from '../../utils/MainApi.js';
 import * as movieApi from '../../utils/MoviesApi.js';
@@ -21,14 +22,17 @@ import { MOVIE_API } from '../../utils/constants.js';
 function App() {
   const navigate = useNavigate();
 
-  const [ loggedIn,         setLoggedIn         ] = useState(false);
-  const [ loading,          setLoading          ] = useState(false);
-  const [ currentUser,      setCurrentUser      ] = useState({});
+  const [ loggedIn,          setLoggedIn           ] = useState(false);
+  const [ loading,           setLoading            ] = useState(false);
+  const [ currentUser,       setCurrentUser        ] = useState({});
 
-  const [ isBurgerMenuOpen, setIsBurgerMenuOpen ] = useState(false);
+  const [ isError,            setIsError           ] = useState(false);
+  const [ isUpdateSucces,    setIsUpdateSucces     ] = useState(false);
+  const [ isInfoToolTipOpen, setIsInfoToolTipOpen  ] = useState(false);
+  const [ isBurgerMenuOpen,  setIsBurgerMenuOpen   ] = useState(false);
 
-  const [ searchError,      setSearchError      ] = useState(false);
-  const [ saveCard,         setSaveCard         ] = useState([]);
+  const [ searchError,       setSearchError        ] = useState(false);
+  const [ saveCard,          setSaveCard           ] = useState([]);
 
   const handleUserAuthorization = useCallback(
     async({ email, password }) => {
@@ -37,10 +41,12 @@ function App() {
         const userData = await mainApi.authorize({ email, password })
         if (userData) {
           setLoggedIn(true);
-          navigate('/movies', {replace: true})
+          navigate('/movies', {replace: true});
         }
       } catch(err) {
-        console.log(err)
+        console.log(err);
+        setIsError(true);
+        setIsInfoToolTipOpen(true);
       } finally {
         setLoading(false);
       }
@@ -53,11 +59,13 @@ function App() {
       try {
         const userData = await mainApi.register({ name, email, password })
         if (userData) {
-          handleUserAuthorization({ email, password })
-          navigate('/movies', {replace: true})
+          handleUserAuthorization({ email, password });
+          navigate('/movies', {replace: true});
         }
       } catch(err) {
-        console.error(err)
+        console.error(err);
+        setIsError(true);
+        setIsInfoToolTipOpen(true);
       } finally {
         setLoading(false);
       }
@@ -74,6 +82,8 @@ function App() {
         }
       } catch(err) {
         console.error(err);
+        setIsError(true);
+        setIsInfoToolTipOpen(true);
       }
     }, []
   );
@@ -84,9 +94,14 @@ function App() {
       const userData = await mainApi.setUserProfile({ name, email })
       if (userData) {
         setCurrentUser(userData);
+        setIsUpdateSucces(true);
+        setIsInfoToolTipOpen(true);
       }
     } catch(err) {
       console.error(err)
+      setIsUpdateSucces(false);
+      setIsError(true);
+      setIsInfoToolTipOpen(true);
     } finally {
       setLoading(false);
     }
@@ -105,6 +120,8 @@ function App() {
       }
     } catch (err) {
       console.error(err);
+      setIsError(true);
+      setIsInfoToolTipOpen(true);
     }
   }, [navigate]);
 
@@ -118,6 +135,7 @@ function App() {
     } catch(err) {
       console.error(err);
       setSearchError(true);
+      setIsInfoToolTipOpen(true);
     } finally {
       setLoading(false);
     }
@@ -143,6 +161,8 @@ function App() {
       }
     } catch(err) {
       console.error(err);
+      setIsError(true);
+      setIsInfoToolTipOpen(true);
     }
   }
 
@@ -155,6 +175,8 @@ function App() {
       }
     } catch (err) {
       console.error(err);
+      setIsError(true);
+      setIsInfoToolTipOpen(true);
     }
   }, []);
 
@@ -169,6 +191,8 @@ function App() {
       }
     } catch(err) {
       console.error(err)
+      setIsError(true);
+      setIsInfoToolTipOpen(true);
     }
   }
 
@@ -178,6 +202,10 @@ function App() {
     } else {
       setIsBurgerMenuOpen(false)
     }
+  }
+
+  const handleCloseTooltip = () => {
+    setIsInfoToolTipOpen(false)
   }
 
   useEffect(() => {
@@ -255,6 +283,12 @@ function App() {
           }/>
           <Route path='*' element={<NotFound />} />
         </Routes>
+        <InfoTooltip
+          isOpen = {isInfoToolTipOpen}
+          onClose = {handleCloseTooltip}
+          isSucces = {isUpdateSucces}
+          isError = {isError}
+        />
       </CurrentUserContext.Provider>
     </div>
   );
