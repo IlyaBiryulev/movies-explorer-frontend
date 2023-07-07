@@ -249,7 +249,8 @@ function App() {
               />
             }
           />
-          <Route path='/profile'
+          <Route
+            path='/profile'
             element = {
               <ProtectedRouteElement
                 element={Profile}

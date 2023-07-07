@@ -5,8 +5,7 @@ function InfoTooltip({isOpen, onClose, isSucces, isError}) {
   const infoTooltipText = () => {
     if (isSucces) {
       return 'Данные успешно изменены'
-    }
-    if (isError) {
+    } else if (isError) {
       return 'Что-то пошло не так! Попробуйте ещё раз.'
     }
   }
