@@ -1,21 +1,25 @@
 import './Register.css';
+import { Navigate } from "react-router-dom";
 
 import Authentication from '../Authentication/Authentication.js';
 import Validation from '../Validation/Validation.js';
 
-function Register() {
+function Register({ onRegister, isLoading, loggedIn }) {
   const { values, errors, isValid, onChange } = Validation();
 
   function handleSubmit(e) {
     e.preventDefault();
+    onRegister(values)
   }
 
-  return (
+  return loggedIn ? (
+    <Navigate to="/" replace />
+  ) : (
     <main>
       <Authentication
         name={'register'}
         title={'Добро пожаловать!'}
-        btnSubmit={'Зарегистрироваться'}
+        btnSubmit={isLoading ? 'Регистрация...': 'Зарегистрироваться'}
         onSubmit={handleSubmit}
         isValid={isValid}
         isLogin={'Уже зарегистророваны?'}
@@ -26,38 +30,38 @@ function Register() {
         <input
           type="name"
           name="name"
-          form="register"
           id="name-input"
           className="auth__form-input"
+          pattern='^[а-яА-ЯёЁa-zA-Z]+$'
           required
           onChange={onChange}
           value={values.name || ''}
         />
-        <span className={`auth__form-input-error ${errors.name ? 'auth__form-input-error_active' : ''}`}>{errors.name || ''}</span>
+        <span className={`auth__form-input-error ${errors.name ? 'auth__form-input-error_active' : ''}`}>{errors.name}</span>
         <p className='auth__placeholder'>E-mail</p>
         <input
           type="email"
           name="email"
-          form="register"
           id="email-input"
           className="auth__form-input"
           required
           onChange={onChange}
           value={values.email || ''}
         />
-        <span className={`auth__form-input-error ${errors.email ? 'auth__form-input-error_active' : ''}`}>{errors.email || ''}</span>
+        <span className={`auth__form-input-error ${errors.email ? 'auth__form-input-error_active' : ''}`}>{errors.email}</span>
         <p className='auth__placeholder'>Пароль</p>
         <input
           type="password"
           name="password"
-          form="register"
           id="password-input"
           className="auth__form-input"
           required
+          minLength={6}
+          maxLength={30}
           onChange={onChange}
           value={values.password || ''}
         />
-        <span className={`auth__form-input-error ${errors.email ? 'auth__form-input-error_active' : ''}`}>{errors.password || ''}</span>
+        <span className={`auth__form-input-error ${errors.email ? 'auth__form-input-error_active' : ''}`}>{errors.password}</span>
       </Authentication>
     </main>
   );

@@ -70,7 +70,7 @@
 }
 
 .auth__submit-button:hover {
-  opacity: 0.85;
+  opacity: 0.6;
 }
 
 .auth__submit-button:disabled {
