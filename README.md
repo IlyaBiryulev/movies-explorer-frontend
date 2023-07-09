@@ -77,3 +77,6 @@
 
 Илья Бирюлев
 
+- e-mail: birulevila@gmail.com
+- tg: [@ilya_bir](https://t.me/ilya_bir)
+
